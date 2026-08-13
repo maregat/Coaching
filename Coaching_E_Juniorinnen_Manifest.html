@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coaching-Manifest · E-Juniorinnen · Raute im 4+1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink: #17231d;
+    --muted: #617067;
+    --paper: #f4f6f1;
+    --white: #fff;
+    --green: #1f6848;
+    --green-dark: #123b2b;
+    --green-soft: #dceee2;
+    --mint: #eff8f0;
+    --orange: #df713f;
+    --orange-soft: #fff0e8;
+    --blue: #28648a;
+    --blue-soft: #e9f4fa;
+    --yellow: #e7b546;
+    --yellow-soft: #fff7dd;
+    --line: #dce5dd;
+    --shadow: 0 8px 24px rgba(23, 35, 29, .07);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font: 15px/1.65 'DM Sans', sans-serif;
+  }
+  .hero {
+    background: var(--green-dark);
+    color: var(--white);
+    padding: 54px 24px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '1-2-1';
+    position: absolute;
+    right: clamp(24px, 10vw, 160px);
+    bottom: -22px;
+    color: rgba(255,255,255,.07);
+    font: 700 clamp(90px, 17vw, 210px)/.8 'Barlow Condensed', sans-serif;
+  }
+  .hero-inner, .page { max-width: 1040px; margin: 0 auto; }
+  .eyebrow {
+    color: #f2bc70;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  h1, h2, h3 { font-family: 'Barlow Condensed', sans-serif; line-height: 1.02; }
+  h1 { max-width: 650px; margin: 12px 0 14px; font-size: clamp(48px, 8vw, 82px); letter-spacing: .3px; }
+  .hero p { max-width: 650px; margin: 0; color: rgba(255,255,255,.8); font-size: 17px; }
+  .page { padding: 0 20px 72px; }
+  .intro {
+    display: grid;
+    grid-template-columns: 1.4fr .8fr;
+    gap: 22px;
+    margin-top: 28px;
+  }
+  .panel, .card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  .panel { padding: 24px 26px; }
+  .panel h2 { margin: 0 0 12px; color: var(--green); font-size: 29px; }
+  .panel p { margin: 0 0 10px; }
+  .panel p:last-child { margin-bottom: 0; }
+  .manifest-principle {
+    background: var(--orange);
+    color: var(--white);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .manifest-principle strong { display: block; margin-bottom: 8px; font: 700 29px/1.05 'Barlow Condensed', sans-serif; }
+  .manifest-principle span { color: rgba(255,255,255,.82); }
+  .section { margin-top: 52px; }
+  .section-heading { display: flex; align-items: end; gap: 14px; margin-bottom: 18px; }
+  .section-number { color: var(--orange); font: 700 42px/.8 'Barlow Condensed', sans-serif; }
+  .section h2 { margin: 0; font-size: 38px; }
+  .section-lead { color: var(--muted); margin: -8px 0 20px 57px; }
+  .formation {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 26px;
+    align-items: center;
+  }
+  .pitch {
+    aspect-ratio: .74;
+    max-width: 220px;
+    padding: 28px 14px;
+    background: #37804f;
+    border: 4px solid rgba(255,255,255,.65);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .pitch::before { content: ''; position: absolute; inset: 50% 0 auto; border-top: 2px dashed rgba(255,255,255,.5); }
+  .pitch::after { content: ''; position: absolute; left: 25%; right: 25%; top: 0; bottom: 0; border-left: 2px solid rgba(255,255,255,.3); border-right: 2px solid rgba(255,255,255,.3); }
+  .pitch-row { display: flex; justify-content: space-around; gap: 7px; z-index: 1; }
+  .dot { width: 42px; height: 42px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.8); border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; }
+  .dot.back { background: var(--blue); }
+  .dot.side { background: var(--orange); }
+  .dot.front { background: var(--yellow); color: var(--ink); }
+  .formation-copy h3 { margin: 0 0 12px; color: var(--green); font-size: 27px; }
+  .formation-copy ul { margin: 0; padding-left: 20px; }
+  .formation-copy li { margin-bottom: 8px; }
+  .notice { margin-top: 18px; padding: 16px 18px; border-left: 4px solid var(--yellow); background: var(--yellow-soft); }
+  .phase-grid, .cue-grid, .training-grid, .match-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .card { padding: 22px; }
+  .card h3 { margin: 0 0 10px; font-size: 27px; }
+  .phase-card { border-top: 5px solid var(--green); }
+  .phase-card.loss { border-top-color: var(--orange); }
+  .phase-card.defend { border-top-color: var(--blue); }
+  .phase-card.win { border-top-color: var(--yellow); }
+  .phase-card p { color: var(--muted); margin: 0 0 12px; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .cue-grid { grid-template-columns: repeat(2, 1fr); }
+  .cue { background: var(--mint); border-left: 4px solid var(--green); }
+  .cue h3 { color: var(--green); }
+  .cue .say { margin: 15px 0 12px; padding: 13px 15px; border-radius: 6px; background: var(--green-dark); color: white; font-size: 16px; font-weight: 700; }
+  .cue .action { color: var(--muted); }
+  .cue .question { margin-top: 12px; color: var(--green); font-size: 13px; font-style: italic; }
+  .coaching-rules { display: grid; gap: 12px; }
+  .coaching-rule { display: grid; grid-template-columns: 44px 1fr; gap: 15px; align-items: start; padding: 17px 19px; background: white; border: 1px solid var(--line); border-radius: 8px; }
+  .coaching-rule b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--orange-soft); color: var(--orange); }
+  .coaching-rule strong { display: block; margin-bottom: 3px; }
+  .coaching-rule span { color: var(--muted); }
+  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .time { padding: 17px; background: var(--blue-soft); border-radius: 8px; }
+  .time strong { display: block; color: var(--blue); font-size: 14px; }
+  .time b { display: block; margin: 5px 0; font: 600 24px/1 'Barlow Condensed', sans-serif; }
+  .time span { color: var(--muted); font-size: 13px; }
+  .progression { border-collapse: collapse; width: 100%; background: white; border: 1px solid var(--line); }
+  .progression th, .progression td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .progression th { color: var(--green); background: var(--mint); font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
+  .progression tr:last-child td { border-bottom: 0; }
+  .rotation { background: var(--green-dark); color: white; }
+  .rotation h2, .rotation h3 { color: white; }
+  .rotation p, .rotation li { color: rgba(255,255,255,.78); }
+  .rotation .accent { color: #f2bc70; }
+  .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; }
+  .check { padding-left: 26px; position: relative; }
+  .check::before { content: '✓'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+  .footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media (max-width: 700px) {
+    .hero { padding: 40px 20px 38px; }
+    .intro, .formation, .phase-grid, .cue-grid, .training-grid, .match-grid, .timeline, .checklist { grid-template-columns: 1fr; }
+    .formation .pitch { max-width: 180px; }
+    .section-lead { margin-left: 0; }
+    .section-heading { align-items: center; }
+    .progression { font-size: 13px; }
+    .progression th, .progression td { padding: 10px 8px; }
+  }
+  @media print {
+    body { background: white; }
+    .panel, .card { box-shadow: none; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Coaching-Manifest · E-Juniorinnen · NFV-Kinderfußball</div>
+    <h1>Mutig spielen.<br>Gemeinsam entscheiden.</h1>
+    <p>Unser einfacher Plan für 4+1: eine Raute als Orientierung, Ballbesitz mit einer Idee und Coaching, das Spielerinnen zum eigenen Entscheiden bringt.</p>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <div class="panel">
+      <h2>Wofür dieses Manifest da ist</h2>
+      <p>Dieses Dokument beschreibt nicht die einzig richtige Art, Fußball zu spielen. Es beschreibt unseren gemeinsamen Weg für eine breitensportliche E-Juniorinnen-Mannschaft mit unterschiedlichen Erfahrungen.</p>
+      <p>Die Regeln sollen den Spielerinnen Orientierung geben, ohne ihnen jede Entscheidung abzunehmen. Wir erklären das <strong>Warum</strong>, schaffen viele Wiederholungen und akzeptieren Fehler als Teil des Lernens.</p>
+    </div>
+    <div class="panel manifest-principle">
+      <strong>Unser Leitmotiv</strong>
+      <span>„Ball sichern und mutig nach vorne entscheiden.“</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">01</div><h2>Unser Rahmen</h2></div>
+    <p class="section-lead">Die Eckpunkte des Modells. Turnierdetails richten sich immer nach der aktuellen NFV-Ausschreibung.</p>
+    <div class="panel">
+      <ul>
+        <li><strong>Spielmodell:</strong> 4+1 gegen 4+1 im Turniermodus.</li>
+        <li><strong>Spieldauer:</strong> kurz und intensiv; die genaue Dauer wird aus der gültigen NFV-Regelung übernommen.</li>
+        <li><strong>Training:</strong> 85 Minuten plus freiwillige Ankommenszeit mit Ball.</li>
+        <li><strong>Mannschaft:</strong> bis zu 17 Spielerinnen, im Training meist 12 bis 15.</li>
+        <li><strong>Entwicklung:</strong> Erfahrene Spielerinnen geben Orientierung; neue Spielerinnen erhalten echte Aufgaben und Spielzeit.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">02</div><h2>Die Raute</h2></div>
+    <p class="section-lead">Eine feste Orientierung für das Team, keine dauerhafte Festlegung einzelner Kinder.</p>
+    <div class="panel formation">
+      <div class="pitch" aria-label="Raute mit einer hinteren, zwei seitlichen und einer vorderen Position">
+        <div class="pitch-row"><div class="dot front">Vorne</div></div>
+        <div class="pitch-row"><div class="dot side">Links</div><div class="dot side">Rechts</div></div>
+        <div class="pitch-row"><div class="dot back">Hinten</div></div>
+      </div>
+      <div class="formation-copy">
+        <h3>1-2-1: hinten, zwei Seiten, vorne</h3>
+        <ul>
+          <li><strong>Hinten:</strong> absichern, anspielbar sein und den Aufbau beginnen.</li>
+          <li><strong>Links und rechts:</strong> Breite geben, Passwinkel schaffen und mit zurückarbeiten.</li>
+          <li><strong>Vorne:</strong> Tiefe geben, entgegenkommen und nach Ballverlust zuerst stören.</li>
+          <li>Die Raute bewegt sich gemeinsam zum Ball. Die Rollen können im Training und im Spiel wechseln.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="notice"><strong>Merksatz:</strong> Die Raute gibt uns vier Anspielrichtungen: zurück, links, rechts und nach vorne. Wenn eine Spielerin aus ihrer Position herausrückt, übernimmt eine andere ihre Aufgabe.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">03</div><h2>Die vier Spielmomente</h2></div>
+    <p class="section-lead">Wenige gemeinsame Regeln sind hilfreicher als ein langer Katalog von Laufwegen.</p>
+    <div class="phase-grid">
+      <article class="card phase-card">
+        <h3>Wir haben den Ball</h3>
+        <p>Wir wollen den Ball nicht sofort loswerden. Wir nehmen wahr, sichern und suchen dann die mutige Lösung.</p>
+        <ul><li>Feld groß machen.</li><li>Anspielbar sein und Dreiecke bilden.</li><li>Dribbeln, passen oder nach vorne spielen.</li><li>Nach dem Pass weiterbewegen.</li></ul>
+      </article>
+      <article class="card phase-card loss">
+        <h3>Wir verlieren den Ball</h3>
+        <p>Die erste Reaktion entscheidet: kurz Druck machen, dann gemeinsam zurückarbeiten.</p>
+        <ul><li>Nächste Spielerin verlangsamt die Ballführende.</li><li>Passweg in die Mitte schließen.</li><li>Alle anderen laufen zurück und sichern.</li><li>Nicht stehen bleiben und dem Ball hinterherschauen.</li></ul>
+      </article>
+      <article class="card phase-card defend">
+        <h3>Der Gegner hat den Ball</h3>
+        <p>Wir schützen zuerst unser Tor und die gefährliche Mitte.</p>
+        <ul><li>Zwischen Gegnerin und eigenem Tor stehen.</li><li>Ballführende Spielerin unter kontrollierten Druck setzen.</li><li>Zweite Spielerin sichert dahinter und zentral.</li><li>Nach außen lenken, nicht blind herausstürmen.</li></ul>
+      </article>
+      <article class="card phase-card win">
+        <h3>Wir gewinnen den Ball</h3>
+        <p>Nach der Eroberung kommt nicht der Panikpass, sondern ein kurzer Moment zum Schauen.</p>
+        <ul><li>Kopf heben und freie Richtung erkennen.</li><li>Wenn möglich: erster Kontakt nach vorne.</li><li>Wenn nicht: Ball sichern und Mitspielerin finden.</li><li>Danach wieder Breite und Tiefe herstellen.</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">04</div><h2>Coaching in der Situation</h2></div>
+    <p class="section-lead">Kurze, immer gleiche Sprache. Erst beobachten, dann eine Sache coachen.</p>
+    <div class="cue-grid">
+      <article class="card cue"><h3>Ball nicht wegschießen</h3><div class="say">„Stopp. Kopf hoch. Was siehst du?“</div><div class="action">Danach eine Entscheidung anbieten: „Kannst du dribbeln, passen oder nach vorne spielen?“</div><div class="question">Nachher: „Welche Lösung hast du gesehen?“</div></article>
+      <article class="card cue"><h3>Mut am Ball</h3><div class="say">„Trau dich, nimm ihn mit!“</div><div class="action">Die Spielerin nicht sofort korrigieren. Einen gelungenen ersten Kontakt oder ein mutiges Dribbling sichtbar machen.</div><div class="question">„Was hat dir geholfen, den Ball zu behalten?“</div></article>
+      <article class="card cue"><h3>Freilaufen</h3><div class="say">„Zeig dich! Wo ist dein freier Raum?“</div><div class="action">Auf Abstand und Passwinkel hinweisen, nicht nur auf das Laufen selbst.</div><div class="question">„Konntest du dich sehen lassen?“</div></article>
+      <article class="card cue"><h3>Nach Ballverlust</h3><div class="say">„Erst bremsen, dann zurück!“</div><div class="action">Nächste Spielerin macht Druck. Die anderen schließen die Mitte und helfen der Raute, wieder Ordnung zu finden.</div><div class="question">„Wer war zuerst am Ball und wer hat gesichert?“</div></article>
+      <article class="card cue"><h3>Verteidigen</h3><div class="say">„Ins Tor stellen. Mitte zu!“</div><div class="action">Körper zwischen Gegnerin und Tor, seitlich und kontrolliert. Die zweite Spielerin bleibt in der Sicherung.</div><div class="question">„Wohin wollten wir die Gegnerin lenken?“</div></article>
+      <article class="card cue"><h3>Nach einem Fehler</h3><div class="say">„Weiter! Nächste Aktion!“</div><div class="action">Keine lange Fehleranalyse im laufenden Spiel. Die nächste gute Entscheidung zählt.</div><div class="question">„Was probierst du beim nächsten Mal?“</div></article>
+    </div>
+    <div class="panel" style="margin-top:16px"><strong>Coaching-Grundsatz:</strong> Nicht jede falsche Entscheidung sofort korrigieren. Mutige Entscheidungen sind zunächst wichtiger als perfekte Entscheidungen.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">05</div><h2>Torhüterinnen</h2></div>
+    <p class="section-lead">Die Position rotiert unter den Spielerinnen, die Interesse daran haben und dafür vorbereitet werden.</p>
+    <div class="panel">
+      <div class="coaching-rules">
+        <div class="coaching-rule"><b>1</b><div><strong>Torhüterin ist Teil des Spiels.</strong><span>Sie sichert das Tor, bietet sich beim Aufbau an und schaut nach einem Ballgewinn zuerst nach einer Lösung.</span></div></div>
+        <div class="coaching-rule"><b>2</b><div><strong>Rotation mit Vorbereitung.</strong><span>Ein kleiner Kreis interessierter Spielerinnen erhält regelmäßig kurze Torhütereinheiten. Niemand muss dauerhaft Torhüterin sein.</span></div></div>
+        <div class="coaching-rule"><b>3</b><div><strong>Fehler werden geschützt.</strong><span>Ein Gegentor oder ein Fehlpass ist kein Grund, die Rolle sofort wieder abzunehmen. Die Spielerin bekommt eine klare nächste Aufgabe.</span></div></div>
+        <div class="coaching-rule"><b>4</b><div><strong>Feldspiel bleibt erhalten.</strong><span>Auch rotierende Torhüterinnen trainieren und spielen regelmäßig auf dem Feld.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">06</div><h2>Eine Trainingseinheit</h2></div>
+    <p class="section-lead">85 Minuten Haupttraining. Die freiwilligen 15 Minuten davor gehören dem freien Spielen mit Ball.</p>
+    <div class="timeline">
+      <div class="time"><strong>0–10 MIN</strong><b>Ankommen & Aktivieren</b><span>Dribbeln, kleine Spiele, viele Ballkontakte.</span></div>
+      <div class="time"><strong>10–25 MIN</strong><b>Ballmut</b><span>Ballführung, erster Kontakt, 1 gegen 1 oder kleine Entscheidungsaufgaben.</span></div>
+      <div class="time"><strong>25–45 MIN</strong><b>Spielform 1</b><span>2 gegen 2 oder 3 gegen 3 mit einem klaren Tagesfokus.</span></div>
+      <div class="time"><strong>45–70 MIN</strong><b>Spielform 2</b><span>Raute, Umschalten oder Aufbau in einer größeren Spielform anwenden.</span></div>
+      <div class="time"><strong>70–80 MIN</strong><b>Abschlussspiel</b><span>Freieres Spiel. Der Trainer beobachtet nur den Schwerpunkt.</span></div>
+      <div class="time"><strong>80–85 MIN</strong><b>Reflexion</b><span>Eine kurze Frage: Was hat heute geholfen, mutig zu spielen?</span></div>
+    </div>
+    <div class="notice"><strong>Bei 12 bis 15 Spielerinnen:</strong> Wartezeiten vermeiden. Lieber zwei kleine Felder, parallele Spiele und häufige Rollenwechsel als eine lange Übung mit einer langen Schlange.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">07</div><h2>Entwicklungsweg</h2></div>
+    <p class="section-lead">Ein Schwerpunkt pro Trainingsblock. Frühere Themen bleiben in Spielformen erhalten.</p>
+    <table class="progression">
+      <thead><tr><th>Block</th><th>Hauptfrage</th><th>Woran erkennen wir Fortschritt?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · Ball behalten</strong></td><td>„Kann ich den Ball annehmen und eine Lösung suchen?“</td><td>Weniger blinde Befreiungsschläge, mehr kontrollierte erste Kontakte.</td></tr>
+        <tr><td><strong>2 · Mitspielen</strong></td><td>„Wo kann ich mich anbieten?“</td><td>Spielerinnen schaffen Passwinkel und bewegen sich nach dem Pass.</td></tr>
+        <tr><td><strong>3 · Raute</strong></td><td>„Welche Richtung ist frei?“</td><td>Die Mannschaft bleibt anspielbar und bildet mehrere Dreiecke.</td></tr>
+        <tr><td><strong>4 · Verteidigen</strong></td><td>„Wer macht Druck, wer sichert?“</td><td>Die Mitte wird geschützt und nicht beide Spielerinnen gehen zum Ball.</td></tr>
+        <tr><td><strong>5 · Umschalten</strong></td><td>„Was ist meine erste Aktion nach Ballverlust oder Ballgewinn?“</td><td>Schnelle Reaktion ohne Hektik: bremsen, sichern, schauen, spielen.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section panel rotation">
+    <div class="section-heading"><div class="section-number accent">08</div><h2>Spieltage und Beteiligung</h2></div>
+    <p>Kurze Turnierspiele verlangen klare, einfache Aufgaben. Die Aufstellung soll Orientierung geben, aber nicht in „gute“ und „schlechte“ Spielerinnen teilen.</p>
+    <div class="checklist">
+      <div class="check">Erfahrene und unerfahrene Spielerinnen bewusst mischen.</div>
+      <div class="check">Jede Spielerin bekommt echte Spielzeit und eine echte Aufgabe.</div>
+      <div class="check">Nicht alle unerfahrenen Spielerinnen gleichzeitig ohne Orientierung einsetzen.</div>
+      <div class="check">Erfahrene Spielerinnen unterstützen durch Anbieten und Kommunikation.</div>
+      <div class="check">Vor jedem Spiel nur zwei Teamziele nennen.</div>
+      <div class="check">Zwischen den Spielen eine Beobachtung und eine Frage sammeln.</div>
+    </div>
+    <div class="notice"><strong>Vor dem Spiel:</strong> „Wir machen das Feld groß. Wenn wir den Ball gewinnen, schauen wir zuerst nach vorne.“</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-number">09</div><h2>Trainer-Check</h2></div>
+    <p class="section-lead">Nach Training oder Spieltag genügt eine kurze Notiz zu diesen Fragen.</p>
+    <div class="panel">
+      <div class="checklist">
+        <div class="check">Trauten sich Spielerinnen, den Ball anzunehmen?</div>
+        <div class="check">Wurde vor der Entscheidung geschaut?</div>
+        <div class="check">Gab es nach Ballverlust eine Reaktion?</div>
+        <div class="check">War die Raute als Orientierung erkennbar?</div>
+        <div class="check">Haben erfahrene Spielerinnen andere beteiligt?</div>
+        <div class="check">Welche eine Sache trainieren wir als Nächstes?</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <strong>Hinweis:</strong> Dieses Manifest beschreibt den gewählten Weg dieser Mannschaft. Verbandsregeln, Spieldauer, Turnierablauf und Spielfeldvorgaben werden jeweils anhand der aktuellen NFV-Durchführungsbestimmungen geprüft. Die ältere Datei <em>Coaching_E_Juniorinnen.html</em> bleibt als ausführliche Coaching-Hilfe und Ideensammlung erhalten.
+  </footer>
+</main>
+</body>
+</html>
