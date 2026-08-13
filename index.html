@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fußball Coaching Tools</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #1a3d2b 0%, #2d6a4f 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+    }
+    
+    .header h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    
+    .cards {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+    }
+    
+    .card-icon {
+      font-size: 48px;
+    }
+    
+    .card h2 {
+      color: #1a3d2b;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .card p {
+      color: #6b756e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .card-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #1a3d2b 0%, #2d6a4f 100%);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    
+    .card:hover .card-cta {
+      opacity: 0.9;
+    }
+    
+    .footer {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 40px;
+      font-size: 13px;
+    }
+    
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 32px;
+      }
+      
+      .card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="header">
+      <h1>⚽ Coaching Tools</h1>
+      <p>E-Mädels Training & Platzplanung</p>
+    </div>
+    
+    <div class="cards">
+      <!-- Card 1: Coaching Guide -->
+      <a href="Coaching_E_Juniorinnen.html" class="card">
+        <div class="card-icon">🎓</div>
+        <h2>4+1 Coaching Leitfaden</h2>
+        <p>Fundierte Verhaltensregeln für Abwehr und Angriff im E-Jugend Bereich mit praktischen Coaching-Tipps.</p>
+        <span class="card-cta">→ Zum Leitfaden</span>
+      </a>
+      
+      <!-- Card 2: Training Planer -->
+      <a href="Training-Platzplaner.html" class="card">
+        <div class="card-icon">🎯</div>
+        <h2>Trainings-Platzplaner</h2>
+        <p>Übungsfelder auf dem Gesamtplatz anordnen – interaktiv ziehen, drehen und die Kapazität planen.</p>
+        <span class="card-cta">→ Zum Platzplaner</span>
+      </a>
+    </div>
+    
+    <div class="footer">
+      <p>📱 Öffne diese Seite auf deinem Handy für volle Funktionalität</p>
+    </div>
+  </div>
+  
+</body>
+</html>
