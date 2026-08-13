@@ -32,8 +32,21 @@
     margin: 0;
     color: var(--ink);
     background: var(--paper);
-    font: 15px/1.65 'DM Sans', sans-serif;
+    font: 16px/1.65 'DM Sans', sans-serif;
   }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 10;
+    padding: 10px 14px;
+    background: var(--white);
+    color: var(--green-dark);
+    font-weight: 700;
+  }
+  .skip-link:focus { top: 12px; }
   .hero {
     background: var(--green-dark);
     color: var(--white);
@@ -61,6 +74,44 @@
   h1 { max-width: 650px; margin: 12px 0 14px; font-size: clamp(48px, 8vw, 82px); letter-spacing: .3px; }
   .hero p { max-width: 650px; margin: 0; color: rgba(255,255,255,.8); font-size: 17px; }
   .page { padding: 0 20px 72px; }
+  .jump-nav {
+    display: flex;
+    gap: 8px;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 14px 20px 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .jump-nav a {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .jump-nav a:hover { border-color: var(--green); background: var(--mint); }
+  .quickstart {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 22px;
+    margin-top: 28px;
+    padding: 26px;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    background: var(--white);
+  }
+  .quickstart h2 { margin: 0 0 8px; color: var(--green); font-size: 32px; }
+  .quickstart p { max-width: 68ch; margin: 0; color: var(--muted); }
+  .quickstart-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .quick-rule { padding: 13px 14px; border-radius: 7px; background: var(--mint); }
+  .quick-rule strong { display: block; color: var(--green-dark); }
+  .quick-rule span { color: var(--muted); font-size: 14px; }
   .intro {
     display: grid;
     grid-template-columns: 1.4fr .8fr;
@@ -91,7 +142,7 @@
   .section-heading { display: flex; align-items: end; gap: 14px; margin-bottom: 18px; }
   .section-number { color: var(--orange); font: 700 42px/.8 'Barlow Condensed', sans-serif; }
   .section h2 { margin: 0; font-size: 38px; }
-  .section-lead { color: var(--muted); margin: -8px 0 20px 57px; }
+  .section-lead { max-width: 68ch; color: var(--muted); margin: -8px 0 20px 57px; }
   .formation {
     display: grid;
     grid-template-columns: 220px 1fr;
@@ -121,6 +172,9 @@
   .formation-copy ul { margin: 0; padding-left: 20px; }
   .formation-copy li { margin-bottom: 8px; }
   .notice { margin-top: 18px; padding: 16px 18px; border-left: 4px solid var(--yellow); background: var(--yellow-soft); }
+  details { margin-top: 16px; border-top: 1px solid var(--line); }
+  summary { padding: 13px 0 2px; color: var(--green); cursor: pointer; font-weight: 700; }
+  details p { max-width: 68ch; margin: 8px 0 0; color: var(--muted); }
   .phase-grid, .cue-grid, .training-grid, .match-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .card { padding: 22px; }
   .card h3 { margin: 0 0 10px; font-size: 27px; }
@@ -151,6 +205,7 @@
   .progression th, .progression td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   .progression th { color: var(--green); background: var(--mint); font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
   .progression tr:last-child td { border-bottom: 0; }
+  .table-wrap { overflow-x: auto; }
   .rotation { background: var(--green-dark); color: white; }
   .rotation h2, .rotation h3 { color: white; }
   .rotation p, .rotation li { color: rgba(255,255,255,.78); }
@@ -159,9 +214,13 @@
   .check { padding-left: 26px; position: relative; }
   .check::before { content: '✓'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
   .footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
   @media (max-width: 700px) {
     .hero { padding: 40px 20px 38px; }
-    .intro, .formation, .phase-grid, .cue-grid, .training-grid, .match-grid, .timeline, .checklist { grid-template-columns: 1fr; }
+    .intro, .quickstart, .formation, .phase-grid, .cue-grid, .training-grid, .match-grid, .timeline, .checklist { grid-template-columns: 1fr; }
+    .quickstart-list { grid-template-columns: 1fr; }
     .formation .pitch { max-width: 180px; }
     .section-lead { margin-left: 0; }
     .section-heading { align-items: center; }
@@ -176,6 +235,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 <header class="hero">
   <div class="hero-inner">
     <div class="eyebrow">Coaching-Manifest · E-Juniorinnen · NFV-Kinderfußball</div>
@@ -184,7 +244,29 @@
   </div>
 </header>
 
-<main class="page">
+<nav class="jump-nav" aria-label="Inhaltsnavigation">
+  <a href="#schnellstart">Schnellstart</a>
+  <a href="#spielmodell">Raute</a>
+  <a href="#spielmomente">Spielmomente</a>
+  <a href="#coaching">Coaching</a>
+  <a href="#training">Training</a>
+  <a href="#spieltage">Spieltage</a>
+</nav>
+
+<main class="page" id="inhalt">
+  <section class="quickstart" id="schnellstart" aria-labelledby="schnellstart-titel">
+    <div>
+      <h2 id="schnellstart-titel">Schnellstart</h2>
+      <p>Wenn nur eine Minute bleibt: Diese vier Regeln reichen als gemeinsamer Startpunkt für Training und Spiel.</p>
+    </div>
+    <div class="quickstart-list">
+      <div class="quick-rule"><strong>1 · Kopf hoch</strong><span>Vor der Aktion schauen.</span></div>
+      <div class="quick-rule"><strong>2 · Ball sichern</strong><span>Nicht panisch wegschießen.</span></div>
+      <div class="quick-rule"><strong>3 · Mutig entscheiden</strong><span>Dribbeln, passen oder nach vorne.</span></div>
+      <div class="quick-rule"><strong>4 · Weiterarbeiten</strong><span>Nach Ballverlust bremsen und zurück.</span></div>
+    </div>
+  </section>
+
   <section class="intro">
     <div class="panel">
       <h2>Wofür dieses Manifest da ist</h2>
@@ -197,7 +279,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="rahmen">
     <div class="section-heading"><div class="section-number">01</div><h2>Unser Rahmen</h2></div>
     <p class="section-lead">Die Eckpunkte des Modells. Turnierdetails richten sich immer nach der aktuellen NFV-Ausschreibung.</p>
     <div class="panel">
@@ -211,7 +293,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="spielmodell">
     <div class="section-heading"><div class="section-number">02</div><h2>Die Raute</h2></div>
     <p class="section-lead">Eine feste Orientierung für das Team, keine dauerhafte Festlegung einzelner Kinder.</p>
     <div class="panel formation">
@@ -231,9 +313,13 @@
       </div>
     </div>
     <div class="notice"><strong>Merksatz:</strong> Die Raute gibt uns vier Anspielrichtungen: zurück, links, rechts und nach vorne. Wenn eine Spielerin aus ihrer Position herausrückt, übernimmt eine andere ihre Aufgabe.</div>
+    <details>
+      <summary>Warum eine Raute?</summary>
+      <p>Die Raute bietet der ballführenden Spielerin mehrere Richtungen an, ohne viele Laufwege auswendig lernen zu müssen. Sie bleibt eine Orientierung: Die Spielerinnen dürfen ihre Rollen wechseln, solange die Mannschaft wieder anspielbar und abgesichert ist.</p>
+    </details>
   </section>
 
-  <section class="section">
+  <section class="section" id="spielmomente">
     <div class="section-heading"><div class="section-number">03</div><h2>Die vier Spielmomente</h2></div>
     <p class="section-lead">Wenige gemeinsame Regeln sind hilfreicher als ein langer Katalog von Laufwegen.</p>
     <div class="phase-grid">
@@ -260,7 +346,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="coaching">
     <div class="section-heading"><div class="section-number">04</div><h2>Coaching in der Situation</h2></div>
     <p class="section-lead">Kurze, immer gleiche Sprache. Erst beobachten, dann eine Sache coachen.</p>
     <div class="cue-grid">
@@ -274,7 +360,7 @@
     <div class="panel" style="margin-top:16px"><strong>Coaching-Grundsatz:</strong> Nicht jede falsche Entscheidung sofort korrigieren. Mutige Entscheidungen sind zunächst wichtiger als perfekte Entscheidungen.</div>
   </section>
 
-  <section class="section">
+  <section class="section" id="torhueterinnen">
     <div class="section-heading"><div class="section-number">05</div><h2>Torhüterinnen</h2></div>
     <p class="section-lead">Die Position rotiert unter den Spielerinnen, die Interesse daran haben und dafür vorbereitet werden.</p>
     <div class="panel">
@@ -287,7 +373,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="training">
     <div class="section-heading"><div class="section-number">06</div><h2>Eine Trainingseinheit</h2></div>
     <p class="section-lead">85 Minuten Haupttraining. Die freiwilligen 15 Minuten davor gehören dem freien Spielen mit Ball.</p>
     <div class="timeline">
@@ -304,6 +390,7 @@
   <section class="section">
     <div class="section-heading"><div class="section-number">07</div><h2>Entwicklungsweg</h2></div>
     <p class="section-lead">Ein Schwerpunkt pro Trainingsblock. Frühere Themen bleiben in Spielformen erhalten.</p>
+    <div class="table-wrap">
     <table class="progression">
       <thead><tr><th>Block</th><th>Hauptfrage</th><th>Woran erkennen wir Fortschritt?</th></tr></thead>
       <tbody>
@@ -314,9 +401,10 @@
         <tr><td><strong>5 · Umschalten</strong></td><td>„Was ist meine erste Aktion nach Ballverlust oder Ballgewinn?“</td><td>Schnelle Reaktion ohne Hektik: bremsen, sichern, schauen, spielen.</td></tr>
       </tbody>
     </table>
+    </div>
   </section>
 
-  <section class="section panel rotation">
+  <section class="section panel rotation" id="spieltage">
     <div class="section-heading"><div class="section-number accent">08</div><h2>Spieltage und Beteiligung</h2></div>
     <p>Kurze Turnierspiele verlangen klare, einfache Aufgaben. Die Aufstellung soll Orientierung geben, aber nicht in „gute“ und „schlechte“ Spielerinnen teilen.</p>
     <div class="checklist">
