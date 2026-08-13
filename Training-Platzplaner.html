@@ -139,10 +139,14 @@
   .pitch-wrap{
     flex:1;
     min-width:420px;
+    display:flex;
+    flex-direction:column;
+    height:calc(100vh - 60px);
   }
   .pitch-outer{
     position:relative;
     width:100%;
+    flex:1;
     background:var(--pitch-green);
     border-radius:10px;
     overflow:hidden;
