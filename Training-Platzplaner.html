@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Trainings-Platzplaner</title>
+<style>
+  :root{
+    --pitch-green:#3f9142;
+    --pitch-green-dark:#398b3c;
+    --line:#ffffff;
+    --panel-bg:#ffffff;
+    --panel-border:#e2e5e0;
+    --text:#1f2a24;
+    --text-muted:#6b756e;
+    --accent:#1f6f3f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#f4f5f2;
+    color:var(--text);
+    padding:20px;
+  }
+  h1{
+    font-size:20px;
+    font-weight:600;
+    margin:0 0 4px 0;
+  }
+  .subtitle{
+    color:var(--text-muted);
+    font-size:13px;
+    margin:0 0 18px 0;
+  }
+  .layout{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .sidebar{
+    width:270px;
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .panel{
+    background:var(--panel-bg);
+    border:1px solid var(--panel-border);
+    border-radius:12px;
+    padding:14px 16px;
+  }
+  .panel h2{
+    font-size:13px;
+    font-weight:600;
+    margin:0 0 10px 0;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    color:var(--text-muted);
+  }
+  .field-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    font-size:13px;
+  }
+  select, input[type=number], input[type=text]{
+    font-size:13px;
+    padding:6px 8px;
+    border-radius:6px;
+    border:1px solid var(--panel-border);
+    background:#fafaf9;
+    color:var(--text);
+  }
+  input[type=number]{width:64px;}
+  .capacity-box{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-top:4px;
+  }
+  .capacity-num{
+    font-size:26px;
+    font-weight:600;
+  }
+  .capacity-target{
+    font-size:13px;
+    color:var(--text-muted);
+  }
+  .capacity-bar{
+    height:8px;
+    border-radius:5px;
+    background:#e9ebe6;
+    margin-top:8px;
+    overflow:hidden;
+  }
+  .capacity-fill{
+    height:100%;
+    background:var(--accent);
+    transition:width .2s ease, background .2s ease;
+  }
+  .add-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    padding:9px 10px;
+    margin-bottom:6px;
+    border-radius:8px;
+    border:1px solid var(--panel-border);
+    background:#fafaf9;
+    cursor:pointer;
+    font-size:13px;
+    color:var(--text);
+  }
+  .add-btn:hover{
+    background:#f0f1ee;
+    border-color:#c9ccc5;
+  }
+  .swatch{
+    width:14px;height:14px;border-radius:3px;flex-shrink:0;
+  }
+  .add-btn .name{font-weight:500;}
+  .add-btn .meta{color:var(--text-muted); font-size:11px;}
+  .hint{
+    font-size:11.5px;
+    color:var(--text-muted);
+    line-height:1.5;
+    margin-top:2px;
+  }
+  .pitch-wrap{
+    flex:1;
+    min-width:420px;
+  }
+  .pitch-outer{
+    position:relative;
+    width:100%;
+    background:var(--pitch-green);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,.15);
+    user-select:none;
+  }
+  .stripe{
+    position:absolute;
+    top:0; bottom:0;
+    background:var(--pitch-green-dark);
+  }
+  .pitch-svg{
+    position:absolute;
+    top:0;left:0;width:100%;height:100%;
+    pointer-events:none;
+  }
+  .zone{
+    position:absolute;
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:6px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:grab;
+    padding:2px;
+    text-align:center;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+  }
+  .zone:active{cursor:grabbing;}
+  .zone .zlabel{
+    font-size:11px;
+    font-weight:600;
+    color:#fff;
+    line-height:1.2;
+    text-shadow:0 1px 2px rgba(0,0,0,.4);
+    pointer-events:none;
+  }
+  .zone .zcap{
+    font-size:10px;
+    color:rgba(255,255,255,.9);
+    text-shadow:0 1px 2px rgba(0,0,0,.4);
+    pointer-events:none;
+  }
+  .zone .zctrl{
+    position:absolute;
+    top:-10px;
+    display:flex;
+    gap:3px;
+  }
+  .zone .zctrl button{
+    width:19px;height:19px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,.2);
+    background:#fff;
+    font-size:11px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    padding:0;
+  }
+  .zone .zctrl .del{right:-10px;}
+  .zone .zctrl{right:2px;}
+  .footer-note{
+    font-size:11.5px;
+    color:var(--text-muted);
+    margin-top:10px;
+  }
+  .empty-msg{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    color:rgba(255,255,255,.75);
+    font-size:13px;
+    text-align:center;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Trainings-Platzplaner</h1>
+<p class="subtitle">Übungsfelder auf dem Gesamtplatz anordnen – ziehen zum Verschieben, drehen und löschen über die Symbole.</p>
+
+<div class="layout">
+
+  <div class="sidebar">
+
+    <div class="panel">
+      <h2>Platz</h2>
+      <div class="field-row">
+        <span>Format</span>
+        <select id="fieldSize"></select>
+      </div>
+      <div class="field-row">
+        <span>Zielspielerzahl</span>
+        <input type="number" id="targetPlayers" value="18" min="1" max="200">
+      </div>
+      <div class="capacity-box">
+        <span class="capacity-num" id="capNum">0</span>
+        <span class="capacity-target">/ <span id="capTarget">18</span> Spieler verplant</span>
+      </div>
+      <div class="capacity-bar"><div class="capacity-fill" id="capFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Übungsfeld hinzufügen</h2>
+      <div id="addButtons"></div>
+      <p class="hint">Klick fügt das Feld mittig hinzu. Danach per Drag verschieben. ⟳ dreht 90°, × entfernt.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Eigenes Feld</h2>
+      <div class="field-row">
+        <span>Name</span>
+        <input type="text" id="customName" value="Eigenes Feld" style="width:140px;">
+      </div>
+      <div class="field-row">
+        <span>Breite (m)</span>
+        <input type="number" id="customW" value="15" min="1" max="105">
+      </div>
+      <div class="field-row">
+        <span>Höhe (m)</span>
+        <input type="number" id="customH" value="10" min="1" max="68">
+      </div>
+      <div class="field-row">
+        <span>Spieler</span>
+        <input type="number" id="customCap" value="6" min="1" max="99">
+      </div>
+      <button class="add-btn" id="addCustomBtn" style="justify-content:center; font-weight:500;">Eigenes Feld hinzufügen</button>
+      <p class="hint">Maße bleiben fest, wie eingegeben – kein automatisches Skalieren.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Platzierte Felder</h2>
+      <div id="zoneList" style="font-size:12.5px; display:flex; flex-direction:column; gap:6px; max-height:220px; overflow:auto;"></div>
+    </div>
+
+  </div>
+
+  <div class="pitch-wrap">
+    <div class="pitch-outer" id="pitchOuter">
+      <div class="empty-msg" id="emptyMsg">Wähle links ein Übungsfeld aus, um zu starten</div>
+    </div>
+    <p class="footer-note">Maße orientieren sich an echten Feldgrößen (m), proportional auf den gewählten Platz skaliert.</p>
+  </div>
+
+</div>
+
+<script>
+const FIELD_PRESETS = {
+  "grossfeld": {label:"Großfeld 105 × 68 m", w:105, h:68},
+  "halbfeld":  {label:"Halbfeld ca. 68 × 52 m", w:68, h:52},
+  "jugend":    {label:"Jugendfeld ca. 60 × 40 m", w:60, h:40},
+  "kleinfeld": {label:"Kleinfeld ca. 40 × 30 m", w:40, h:30}
+};
+
+const ZONE_TYPES = {
+  funino_2v2: {
+    name:"Funino 2v2 (G-Jugend/Bambini)",
+    meta:"20×16 m · 4 kleine Tore · 4-5 Sp.",
+    w:20, h:16, cap:5,
+    color:"#4a8fc7",
+    group:"Funino-Varianten"
+  },
+  funino_klein: {
+    name:"Funino 3v3",
+    meta:"25×20 m · 4 kleine Tore · 6-8 Sp.",
+    w:25, h:20, cap:8,
+    color:"#2f6fb0",
+    group:"Funino-Varianten"
+  },
+  funino_gross: {
+    name:"Funino 3v3/4v4 (U10-U11)",
+    meta:"32×25 m · 4 kleine Tore · 6-8 Sp.",
+    w:32, h:25, cap:8,
+    color:"#1d4e7a",
+    group:"Funino-Varianten"
+  },
+  funino_misch: {
+    name:"Funino Mischform",
+    meta:"27×20 m · 2 kl. + 1 gr. Tor · 6-8 Sp.",
+    w:27, h:20, cap:8,
+    color:"#2f7f9e",
+    group:"Funino-Varianten"
+  },
+  funino_2grosstore: {
+    name:"Kleinfeld 2 große Tore (5v5)",
+    meta:"40×25 m · 2 Torhüter · 10 Sp.",
+    w:40, h:25, cap:10,
+    color:"#175f7d",
+    group:"Funino-Varianten"
+  },
+  nfv_e_5v5: {
+    name:"E-Juniorinnen 5v5 (NFV)",
+    meta:"40×25 m · 2 Jugendtore 5×2 m · 10 Sp.",
+    w:40, h:25, cap:10,
+    color:"#2f8f4e",
+    group:"Offizielle Spielformen (NFV)"
+  },
+  nfv_d_7v7: {
+    name:"D-Juniorinnen 7v7 mit Abseits (NFV)",
+    meta:"65×50 m · 2 Jugendtore 5×2 m · 14 Sp.",
+    w:65, h:50, cap:14,
+    color:"#1f6f3f",
+    group:"Offizielle Spielformen (NFV)"
+  },
+  torschuss: {
+    name:"Torschuss-Station",
+    meta:"16×12 m · 4-6 Spieler",
+    w:16, h:12, cap:5,
+    color:"#c76a1e",
+    group:"Sonstige Übungen"
+  },
+  passen: {
+    name:"Pass-/Dribbelparcours",
+    meta:"14×8 m · 4-6 Spieler",
+    w:14, h:8, cap:5,
+    color:"#7a4bb0",
+    group:"Sonstige Übungen"
+  }
+};
+const CUSTOM_COLOR = "#4b4b4b";
+
+let state = {
+  fieldSizeKey: "grossfeld",
+  target: 18,
+  zones: []
+};
+let idCounter = 1;
+
+const fieldSizeSel = document.getElementById("fieldSize");
+Object.keys(FIELD_PRESETS).forEach(k=>{
+  const opt = document.createElement("option");
+  opt.value = k;
+  opt.textContent = FIELD_PRESETS[k].label;
+  fieldSizeSel.appendChild(opt);
+});
+fieldSizeSel.value = state.fieldSizeKey;
+fieldSizeSel.addEventListener("change", e=>{
+  state.fieldSizeKey = e.target.value;
+  renderPitchBackground();
+  renderZones();
+});
+
+const targetInput = document.getElementById("targetPlayers");
+targetInput.addEventListener("input", e=>{
+  state.target = parseInt(e.target.value)||0;
+  updateCapacity();
+});
+
+const addButtonsEl = document.getElementById("addButtons");
+const groupOrder = ["Funino-Varianten", "Offizielle Spielformen (NFV)", "Sonstige Übungen"];
+groupOrder.forEach(groupName=>{
+  const keysInGroup = Object.keys(ZONE_TYPES).filter(k=>ZONE_TYPES[k].group===groupName);
+  if(keysInGroup.length===0) return;
+  const heading = document.createElement("div");
+  heading.textContent = groupName;
+  heading.style.fontSize = "11px";
+  heading.style.fontWeight = "600";
+  heading.style.color = "var(--text-muted)";
+  heading.style.textTransform = "uppercase";
+  heading.style.letterSpacing = ".03em";
+  heading.style.margin = "10px 0 6px 0";
+  addButtonsEl.appendChild(heading);
+  keysInGroup.forEach(key=>{
+    const zt = ZONE_TYPES[key];
+    const btn = document.createElement("button");
+    btn.className = "add-btn";
+    btn.innerHTML = `<span class="swatch" style="background:${zt.color}"></span>
+      <span><span class="name">${zt.name}</span><br><span class="meta">${zt.meta}</span></span>`;
+    btn.addEventListener("click", ()=> addZone(key));
+    addButtonsEl.appendChild(btn);
+  });
+});
+
+const pitchOuter = document.getElementById("pitchOuter");
+
+function renderPitchBackground(){
+  const f = FIELD_PRESETS[state.fieldSizeKey];
+  const aspect = f.h / f.w;
+  pitchOuter.style.paddingTop = (aspect*100)+"%";
+  pitchOuter.style.height = "0";
+
+  const vbW = 1000, vbH = 1000*aspect;
+  const scale = vbW/f.w;
+  const goalW = 7.32*scale;
+  const boxW = 16.5*scale, boxH = 40.3*scale;
+  const smallW = 5.5*scale, smallH = 18.3*scale;
+  const circleR = 9.15*scale;
+  const lineW = Math.max(1.5, vbW*0.0016);
+
+  const svg = `
+  <svg class="pitch-svg" viewBox="0 0 ${vbW} ${vbH}" preserveAspectRatio="none">
+    <rect x="${lineW}" y="${lineW}" width="${vbW-2*lineW}" height="${vbH-2*lineW}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <line x1="${vbW/2}" y1="0" x2="${vbW/2}" y2="${vbH}" stroke="white" stroke-width="${lineW}"/>
+    <circle cx="${vbW/2}" cy="${vbH/2}" r="${circleR}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <circle cx="${vbW/2}" cy="${vbH/2}" r="${lineW*1.4}" fill="white"/>
+    <rect x="0" y="${vbH/2-boxH/2}" width="${boxW}" height="${boxH}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <rect x="${vbW-boxW}" y="${vbH/2-boxH/2}" width="${boxW}" height="${boxH}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <rect x="0" y="${vbH/2-smallH/2}" width="${smallW}" height="${smallH}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <rect x="${vbW-smallW}" y="${vbH/2-smallH/2}" width="${smallW}" height="${smallH}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <rect x="-${lineW*2}" y="${vbH/2-goalW/2}" width="${lineW*2}" height="${goalW}" fill="none" stroke="white" stroke-width="${lineW}"/>
+    <rect x="${vbW-lineW*0}" y="${vbH/2-goalW/2}" width="${lineW*2}" height="${goalW}" fill="none" stroke="white" stroke-width="${lineW}"/>
+  </svg>`;
+
+  let stripes = "";
+  const nStripes = 10;
+  for(let i=0;i<nStripes;i++){
+    if(i%2===0){
+      stripes += `<div class="stripe" style="left:${(i/nStripes)*100}%; width:${(1/nStripes)*100}%;"></div>`;
+    }
+  }
+
+  pitchOuter.querySelectorAll(".stripe, .pitch-svg").forEach(el=>el.remove());
+  pitchOuter.insertAdjacentHTML("afterbegin", stripes+svg);
+}
+
+function addZone(typeKey){
+  const zt = ZONE_TYPES[typeKey];
+  const z = {
+    id: idCounter++,
+    xPct: 40 + Math.random()*10,
+    yPct: 35 + Math.random()*10,
+    rotated: false,
+    label: zt.name,
+    cap: zt.cap,
+    w: zt.w,
+    h: zt.h,
+    color: zt.color
+  };
+  state.zones.push(z);
+  renderZones();
+}
+
+function addCustomZone(){
+  const name = document.getElementById("customName").value.trim() || "Eigenes Feld";
+  const w = Math.max(1, parseFloat(document.getElementById("customW").value) || 10);
+  const h = Math.max(1, parseFloat(document.getElementById("customH").value) || 10);
+  const cap = Math.max(1, parseInt(document.getElementById("customCap").value) || 1);
+  const z = {
+    id: idCounter++,
+    xPct: 40 + Math.random()*10,
+    yPct: 35 + Math.random()*10,
+    rotated: false,
+    label: name,
+    cap: cap,
+    w: w,
+    h: h,
+    color: CUSTOM_COLOR
+  };
+  state.zones.push(z);
+  renderZones();
+}
+document.getElementById("addCustomBtn").addEventListener("click", addCustomZone);
+
+function removeZone(id){
+  state.zones = state.zones.filter(z=>z.id!==id);
+  renderZones();
+}
+
+function rotateZone(id){
+  const z = state.zones.find(z=>z.id===id);
+  if(z){ z.rotated = !z.rotated; renderZones(); }
+}
+
+let dragCtx = null;
+
+function onPointerDown(e, z){
+  const rect = pitchOuter.getBoundingClientRect();
+  dragCtx = {
+    id: z.id,
+    startX: e.clientX,
+    startY: e.clientY,
+    startXPct: z.xPct,
+    startYPct: z.yPct,
+    rectW: rect.width,
+    rectH: rect.height
+  };
+  document.addEventListener("pointermove", onPointerMove);
+  document.addEventListener("pointerup", onPointerUp);
+  e.preventDefault();
+}
+function onPointerMove(e){
+  if(!dragCtx) return;
+  const dx = e.clientX - dragCtx.startX;
+  const dy = e.clientY - dragCtx.startY;
+  const z = state.zones.find(z=>z.id===dragCtx.id);
+  if(!z) return;
+  z.xPct = clamp(dragCtx.startXPct + (dx/dragCtx.rectW)*100, 0, 100);
+  z.yPct = clamp(dragCtx.startYPct + (dy/dragCtx.rectH)*100, 0, 100);
+  renderZones(true);
+}
+function onPointerUp(){
+  dragCtx = null;
+  document.removeEventListener("pointermove", onPointerMove);
+  document.removeEventListener("pointerup", onPointerUp);
+}
+function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+
+function renderZones(dragOnly){
+  const f = FIELD_PRESETS[state.fieldSizeKey];
+
+  pitchOuter.querySelectorAll(".zone").forEach(el=>el.remove());
+  const emptyMsg = document.getElementById("emptyMsg");
+  emptyMsg.style.display = state.zones.length ? "none" : "block";
+
+  state.zones.forEach(z=>{
+    let wM = z.w, hM = z.h;
+    if(z.rotated){ [wM,hM] = [hM,wM]; }
+    const wPct = clamp((wM/f.w)*100, 4, 95);
+    const hPct = clamp((hM/f.h)*100, 4, 95);
+
+    const div = document.createElement("div");
+    div.className = "zone";
+    div.style.left = z.xPct+"%";
+    div.style.top = z.yPct+"%";
+    div.style.width = wPct+"%";
+    div.style.height = hPct+"%";
+    div.style.transform = "translate(-50%,-50%)";
+    div.style.background = z.color+"cc";
+    div.style.borderColor = "rgba(255,255,255,.9)";
+
+    div.innerHTML = `
+      <div class="zlabel">${z.label}</div>
+      <div class="zcap">${z.cap} Sp.</div>
+      <div class="zctrl">
+        <button class="rot" title="Drehen" aria-label="Drehen">⟳</button>
+        <button class="del" title="Entfernen" aria-label="Entfernen">×</button>
+      </div>
+    `;
+    div.addEventListener("pointerdown", (e)=>{
+      if(e.target.closest(".zctrl")) return;
+      onPointerDown(e, z);
+    });
+    div.querySelector(".rot").addEventListener("click", ()=> rotateZone(z.id));
+    div.querySelector(".del").addEventListener("click", ()=> removeZone(z.id));
+
+    pitchOuter.appendChild(div);
+  });
+
+  if(!dragOnly){
+    renderZoneList();
+  }
+  updateCapacity();
+}
+
+function renderZoneList(){
+  const listEl = document.getElementById("zoneList");
+  listEl.innerHTML = "";
+  if(state.zones.length===0){
+    listEl.innerHTML = `<span style="color:var(--text-muted)">Noch keine Felder platziert.</span>`;
+    return;
+  }
+  state.zones.forEach(z=>{
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.justifyContent = "space-between";
+    row.style.padding = "4px 6px";
+    row.style.border = "1px solid var(--panel-border)";
+    row.style.borderRadius = "6px";
+    row.innerHTML = `
+      <span style="display:flex; align-items:center; gap:6px;">
+        <span class="swatch" style="background:${z.color}"></span>${z.label}
+      </span>
+      <span style="color:var(--text-muted)">${z.cap} Sp.</span>
+    `;
+    listEl.appendChild(row);
+  });
+}
+
+function updateCapacity(){
+  const total = state.zones.reduce((sum,z)=>sum+z.cap,0);
+  document.getElementById("capNum").textContent = total;
+  document.getElementById("capTarget").textContent = state.target;
+  const pct = state.target>0 ? clamp((total/state.target)*100,0,100) : 0;
+  const fill = document.getElementById("capFill");
+  fill.style.width = pct+"%";
+  fill.style.background = total>=state.target ? "#2f8f4e" : (total >= state.target*0.6 ? "#c78a1e" : "#c74b2e");
+}
+
+renderPitchBackground();
+renderZones();
+updateCapacity();
+</script>
+
+</body>
+</html>
