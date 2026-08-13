@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <title>Trainings-Platzplaner</title>
 <style>
   :root{
@@ -21,6 +22,10 @@
     background:#f4f5f2;
     color:var(--text);
     padding:20px;
+    height:100vh;
+    overflow:hidden;
+    -webkit-user-select:none;
+    user-select:none;
   }
   h1{
     font-size:20px;
@@ -215,6 +220,148 @@
     text-align:center;
     pointer-events:none;
   }
+  
+  /* ═══════════════ MOBILE OPTIMIERUNGEN ═══════════════ */
+  .pitch-outer, .pitch-outer * {
+    touch-action:none;
+  }
+  
+  .zone {
+    touch-action:none;
+  }
+  
+  @media(max-width:768px){
+    body{
+      padding:8px;
+      margin:0;
+    }
+    
+    h1{
+      font-size:18px;
+      margin:4px 0 0 0;
+    }
+    
+    .subtitle{
+      font-size:12px;
+      margin:2px 0 12px 0;
+    }
+    
+    .layout{
+      flex-direction:column;
+      gap:12px;
+      align-items:stretch;
+    }
+    
+    .sidebar{
+      width:100%;
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:rgba(0,0,0,0.95);
+      max-height:45vh;
+      overflow-y:auto;
+      border-radius:12px 12px 0 0;
+      z-index:100;
+      gap:8px;
+      padding:12px 8px;
+      transform:translateY(100%);
+      transition:transform 0.3s ease;
+    }
+    
+    .sidebar.open{
+      transform:translateY(0);
+    }
+    
+    .sidebar-toggle{
+      display:flex;
+      position:fixed;
+      bottom:8px;
+      right:8px;
+      width:56px;
+      height:56px;
+      background:var(--accent);
+      border:none;
+      border-radius:50%;
+      color:white;
+      font-size:28px;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:101;
+      box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .sidebar-toggle:active{
+      transform:scale(0.95);
+    }
+    
+    .sidebar .panel{
+      background:rgba(255,255,255,0.95);
+      margin:0;
+    }
+    
+    .pitch-wrap{
+      flex:1;
+      min-width:unset;
+      width:100%;
+      height:calc(100vh - 160px);
+    }
+    
+    .pitch-outer{
+      height:100%;
+      border-radius:8px;
+    }
+    
+    .zone .zctrl button{
+      width:24px;
+      height:24px;
+      font-size:13px;
+    }
+    
+    .zone .zlabel{
+      font-size:12px;
+    }
+    
+    .zone .zcap{
+      font-size:11px;
+    }
+    
+    .add-btn{
+      padding:12px 10px;
+      font-size:14px;
+    }
+    
+    .footer-note{
+      font-size:11px;
+      margin-top:8px;
+    }
+    
+    select, input[type=number], input[type=text]{
+      font-size:16px;
+      padding:10px 8px;
+    }
+    
+    input[type=number]{
+      width:70px;
+    }
+  }
+  
+  @media(max-width:480px){
+    .field-row{
+      font-size:12px;
+      margin-bottom:6px;
+    }
+    
+    .panel h2{
+      font-size:12px;
+      margin-bottom:8px;
+    }
+    
+    #zoneList{
+      max-height:150px !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -286,6 +433,8 @@
   </div>
 
 </div>
+
+<button class="sidebar-toggle" id="sidebarToggle" style="display:none;">⚙️</button>
 
 <script>
 const FIELD_PRESETS = {
@@ -361,6 +510,36 @@ const ZONE_TYPES = {
   }
 };
 const CUSTOM_COLOR = "#4b4b4b";
+
+// ═════════════════ MOBILE HANDLING ═════════════════
+function setupMobileUI(){
+  const sidebar = document.querySelector(".sidebar");
+  const toggle = document.getElementById("sidebarToggle");
+  const isMobile = window.innerWidth <= 768;
+  
+  if(isMobile){
+    toggle.style.display = "flex";
+    sidebar.classList.remove("open");
+  } else {
+    toggle.style.display = "none";
+    sidebar.classList.add("open");
+  }
+}
+
+window.addEventListener("resize", setupMobileUI);
+window.addEventListener("load", setupMobileUI);
+
+document.getElementById("sidebarToggle").addEventListener("click", ()=>{
+  const sidebar = document.querySelector(".sidebar");
+  sidebar.classList.toggle("open");
+});
+
+// Schließe Sidebar wenn man was auswählt (auf Mobile)
+document.addEventListener("click", (e)=>{
+  if(window.innerWidth <= 768 && e.target.closest(".add-btn")){
+    document.querySelector(".sidebar").classList.remove("open");
+  }
+});
 
 let state = {
   fieldSizeKey: "grossfeld",
@@ -620,6 +799,7 @@ function updateCapacity(){
   fill.style.background = total>=state.target ? "#2f8f4e" : (total >= state.target*0.6 ? "#c78a1e" : "#c74b2e");
 }
 
+setupMobileUI();
 renderPitchBackground();
 renderZones();
 updateCapacity();
