@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="board" viewBox="0 0 900 700" role="img" aria-label="4 plus 1 gegen 4 plus 1 Gegnerballsituation mit Druck, Sicherung und Schutz der Mitte">
+  <style>
+    .token-text { fill: #fff; font: 700 20px sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .token-gk { fill: #123b2b; stroke: #fff; stroke-width: 3; }
+    .token-red { fill: #df713f; stroke: #fff; stroke-width: 3; }
+    .token-blue { fill: #28648a; stroke: #fff; stroke-width: 3; }
+    .ball { fill: #f2bc70; stroke: #fff3d0; stroke-width: 3; }
+    .question { fill: #fff7d1; font: 700 52px sans-serif; text-anchor: middle; }
+    .arrow-line { fill: none; stroke-width: 4; }
+    .arrow-press { stroke: #f2bc70; }
+    .arrow-cover { stroke: #dceee2; }
+    .arrow-pass { stroke: #fff7d1; }
+    .label-bg { fill: rgba(18,59,43,.9); }
+    .label-text { fill: #fff; font: 700 30px sans-serif; text-anchor: middle; dominant-baseline: central; }
+  </style>
+  <defs>
+    <marker id="arrowHeadPress" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#f2bc70" stroke-width="2"/></marker>
+    <marker id="arrowHeadCover" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#dceee2" stroke-width="2"/></marker>
+    <marker id="arrowHeadPass" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#fff7d1" stroke-width="2"/></marker>
+  </defs>
+  <rect x="8" y="8" width="884" height="684" rx="8" fill="#37804f" stroke="#fff" stroke-opacity=".75" stroke-width="5"/>
+  <line x1="8" y1="350" x2="892" y2="350" stroke="#fff" stroke-opacity=".48" stroke-width="3" stroke-dasharray="10 7"/>
+  <path d="M8 300 H26 V400 H8" fill="none" stroke="#fff" stroke-width="4"/><path d="M892 300 H874 V400 H892" fill="none" stroke="#fff" stroke-width="4"/>
+
+  <g class="editable" data-kind="token" data-name="Rote Torhüterin" transform="translate(75 350)"><circle class="token-shape token-gk" r="27"/><text class="token-text" y="1">TW</text></g>
+  <g class="editable" data-kind="token" data-name="R1" transform="translate(560 115)"><circle class="token-shape token-red" r="27"/><text class="token-text" y="1">R1</text></g>
+  <g class="editable" data-kind="token" data-name="R2" transform="translate(650 540)"><circle class="token-shape token-red" r="27"/><text class="token-text" y="1">R2</text></g>
+  <g class="editable" data-kind="token" data-name="R3" transform="translate(380 318)"><circle class="token-shape token-red" r="27"/><text class="token-text" y="1">R3</text></g>
+  <g class="editable" data-kind="token" data-name="R4" transform="translate(255 280)"><circle class="token-shape token-red" r="27"/><text class="token-text" y="1">R4</text></g>
+
+  <g class="editable" data-kind="token" data-name="Blaue Torhüterin" transform="translate(825 350)"><circle class="token-shape token-gk" r="27"/><text class="token-text" y="1">TW</text></g>
+  <g class="editable" data-kind="token" data-name="B1" transform="translate(650 150)"><circle class="token-shape token-blue" r="27"/><text class="token-text" y="1">B1</text></g>
+  <g class="editable" data-kind="token" data-name="B2" transform="translate(740 500)"><circle class="token-shape token-blue" r="27"/><text class="token-text" y="1">B2</text></g>
+  <g class="editable" data-kind="token" data-name="B3 · Ballführende" transform="translate(530 332)"><circle class="token-shape token-blue" r="27"/><circle class="ball" cx="24" cy="24" r="11"/><text class="token-text" y="1">B3</text></g>
+  <g class="editable" data-kind="token" data-name="B4" transform="translate(770 338)"><circle class="token-shape token-blue" r="27"/><text class="token-text" y="1">B4</text></g>
+
+  <g class="editable" data-kind="question" data-name="Entscheidungsmoment" transform="translate(465 135)"><text class="question" y="16">?</text></g>
+
+  <g class="editable" data-kind="arrow" data-name="Option: Druck" transform="translate(520 330)"><line class="arrow-line arrow-press" x1="0" y1="0" x2="-115" y2="-20" marker-end="url(#arrowHeadPress)"/></g>
+  <g class="editable selected" data-kind="arrow" data-name="Option: Sicherung" transform="translate(420 330)"><line class="arrow-line arrow-cover" x1="0" y1="0" x2="-120" y2="22" marker-end="url(#arrowHeadCover)"/></g>
+  <g class="editable" data-kind="arrow" data-name="Option: Passweg" transform="translate(545 335)"><line class="arrow-line arrow-pass" x1="0" y1="0" x2="170" y2="-150" marker-end="url(#arrowHeadPass)"/></g>
+
+  <g class="editable" data-kind="label" data-name="Beschriftung Druck" data-text="Druck" transform="translate(360 240)"><rect class="label-bg" x="-92" y="-33" width="184" height="66"/><text class="label-text" y="3">Druck</text></g>
+  <g class="editable" data-kind="label" data-name="Beschriftung Sicherung" data-text="Mitte zu / sichern" transform="translate(220 408)"><rect class="label-bg" x="-170" y="-33" width="340" height="66"/><text class="label-text" y="3">Mitte zu / sichern</text></g>
+  <g class="editable" data-kind="label" data-name="Beschriftung Passweg" data-text="Passweg blocken" transform="translate(705 190)"><rect class="label-bg" x="-160" y="-33" width="320" height="66"/><text class="label-text" y="3">Passweg blocken</text></g>
+</svg>
