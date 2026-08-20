@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainingspläne</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f5f2;
+      color: #1f2a24;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #e2e5e0;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a3d2b;
+    }
+    
+    .header a {
+      margin-left: auto;
+      text-decoration: none;
+      color: #6b756e;
+      font-size: 24px;
+      transition: color 0.2s;
+    }
+    
+    .header a:hover {
+      color: #1a3d2b;
+    }
+    
+    .plans-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .plan-card {
+      background: white;
+      border: 1px solid #e2e5e0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    
+    .plan-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      border-color: #1a3d2b;
+    }
+    
+    .plan-header {
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafaf9;
+      border-bottom: 1px solid #e2e5e0;
+      transition: background 0.2s;
+    }
+    
+    .plan-card:hover .plan-header {
+      background: #f5f5f3;
+    }
+    
+    .plan-info {
+      flex: 1;
+    }
+    
+    .plan-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a3d2b;
+      margin-bottom: 6px;
+    }
+    
+    .plan-meta {
+      font-size: 13px;
+      color: #6b756e;
+      display: flex;
+      gap: 16px;
+    }
+    
+    .plan-toggle {
+      font-size: 20px;
+      color: #6b756e;
+      transition: transform 0.3s, color 0.2s;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .plan-card.expanded .plan-toggle {
+      transform: rotate(180deg);
+      color: #1a3d2b;
+    }
+    
+    .plan-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .plan-card.expanded .plan-content {
+      max-height: 5000px;
+    }
+    
+    .plan-body {
+      padding: 24px;
+      line-height: 1.8;
+    }
+    
+    .plan-body h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a3d2b;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e5e0;
+    }
+    
+    .plan-body h2:first-child {
+      margin-top: 0;
+    }
+    
+    .plan-body h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d6a4f;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    
+    .plan-body p {
+      font-size: 14px;
+      color: #1f2a24;
+      margin-bottom: 12px;
+    }
+    
+    .plan-body ul, .plan-body ol {
+      margin: 12px 0 12px 24px;
+      font-size: 14px;
+    }
+    
+    .plan-body li {
+      margin-bottom: 6px;
+      color: #1f2a24;
+    }
+    
+    .plan-body strong {
+      color: #1a3d2b;
+      font-weight: 600;
+    }
+    
+    .time-table {
+      width: 100%;
+      margin: 16px 0;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    
+    .time-table th {
+      background: #f5f5f3;
+      padding: 10px;
+      text-align: left;
+      font-weight: 600;
+      color: #1a3d2b;
+      border-bottom: 2px solid #e2e5e0;
+    }
+    
+    .time-table td {
+      padding: 10px;
+      border-bottom: 1px solid #e2e5e0;
+      color: #1f2a24;
+    }
+    
+    .time-table tr:hover {
+      background: #fafaf9;
+    }
+    
+    .tag {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #1b5e20;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 8px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b756e;
+    }
+    
+    .empty-state p {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    
+    @media (max-width: 600px) {
+      .plan-header {
+        padding: 16px;
+      }
+      
+      .plan-body {
+        padding: 16px;
+      }
+      
+      .plan-title {
+        font-size: 16px;
+      }
+      
+      .header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📋 Trainingspläne</h1>
+      <a href="index.html" title="Zurück zur Startseite">←</a>
+    </div>
+    
+    <div class="plans-list" id="plansList"></div>
+  </div>
+
+  <script>
+    const plans = [
+      {
+        id: "kopf-hoch-freilaufen",
+        title: "Kopf hoch & Freilaufen",
+        date: "2026-08-20",
+        focus: "Ballkontrolle mit Blick nach oben, Anspielbarkeit, strukturiertes Passen",
+        duration: "85 Minuten",
+        participants: "15-16 Spielerinnen (U12)",
+        html: `
+          <h2>Zeitverteilung</h2>
+          <table class="time-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Zeit</th>
+                <th>Fokus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aufwärmen</td>
+                <td>12 min</td>
+                <td>Ballgewöhnung</td>
+              </tr>
+              <tr>
+                <td>2v2 Progressive</td>
+                <td>25 min</td>
+                <td>Problemerkennung</td>
+              </tr>
+              <tr>
+                <td>Analyse & Reflexion</td>
+                <td>5 min</td>
+                <td>Diskussion & Coaching</td>
+              </tr>
+              <tr>
+                <td>Dreieck-Zirkulärpass</td>
+                <td>12 min</td>
+                <td>Technische Verbesserung</td>
+              </tr>
+              <tr>
+                <td>3v3 auf Minitore</td>
+                <td>25 min</td>
+                <td>Anwendung & Spielspaß</td>
+              </tr>
+              <tr>
+                <td>Cool-Down & Dehnen</td>
+                <td>6 min</td>
+                <td>Ausklang</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>1. Aufwärmen (12 Min)</h2>
+          <p><strong>Ziel:</strong> Spielerinnen in Bewegung, locker machen</p>
+          <ul>
+            <li>Allgemeines Lauf-ABC (Anfersen, Kniehebelauf, Seitwärts)</li>
+            <li>Beweglichkeit (Kreise mit Beinen, Armkreise)</li>
+            <li>Ballkontakt: Ballgewöhnung (dribbeln um Stangen, Tempo variabel)</li>
+          </ul>
+
+          <h2>2. Problemerkennung: 2v2 Progressive (25 Min)</h2>
+          <h3>Setup</h3>
+          <ul>
+            <li><strong>3 Felder</strong> à ca. 20×15m (Kleinfelder)</li>
+            <li><strong>4 Teams à 3 Spielerinnen</strong> → rotierend je 2v2 spielen</li>
+            <li>Pro Feld: 2 Ministore (ca. 1-1,5m breit) an den Stirnseiten</li>
+            <li>Jeder Team: 5 Min spielen + 5 Min Pause</li>
+          </ul>
+
+          <h3>Phase 1: Freies Spiel (7 Min)</h3>
+          <ul>
+            <li><strong>Regeln:</strong> Nur Grundregeln (keine Handspiel, normales Foul)</li>
+            <li><strong>Fokus:</strong> Beobachten, wie spielen die Mädels? Gucken sie hochschauen? Passen sie?</li>
+            <li><strong>Problem sichtbar machen:</strong> Oft mangelnde Blickrichtung, wenig Positionswechsel</li>
+          </ul>
+
+          <h3>Phase 2: Mit Zusatzregel (13 Min)</h3>
+          <p><strong>Neue Regel einführen:</strong></p>
+          <blockquote style="background: #f5f5f3; padding: 12px; border-left: 3px solid #2d6a4f; margin: 12px 0;">
+            "Ein Tor zählt nur, wenn vorher jede Spielerin den Ball hatte UND es gibt mindestens einen Pass zwischen den Spielerinnen. Kein direktes Torschuss zählt!"
+          </blockquote>
+          <ul>
+            <li><strong>Effekt:</strong> Zwingt zu Passen, Positionswechsel, Hochschauen</li>
+            <li><strong>Problem wird evident:</strong> Mädels merken, dass ständiges "Hochgucken" und "Anspielbar sein" nötig ist</li>
+            <li><strong>Coachen während des Spiels:</strong> "Wo ist deine Mitspielerin? Kannst du sie sehen?"</li>
+          </ul>
+
+          <h2>3. Analyse & Reflexion (5 Min)</h2>
+          <h3>Gesprächspunkte mit den Spielerinnen</h3>
+          <ul>
+            <li><strong>"Was war schwer?"</strong> → Antworten: "Mitspielerin war nicht zu sehen", "Wusste nicht, wo hin passen"</li>
+            <li><strong>"Was war leicht?"</strong> → Antworten: "Dribbeln", "Tor schießen" (wenn direkt möglich)</li>
+            <li><strong>"Wie könnt ihr das Problem lösen?"</strong> → Ziel: Spielerinnen sollen auf "Kopf hoch" und "Anspielbar sein" selber kommen</li>
+            <li><strong>"Was müsst ihr trainieren?"</strong> → Rückpass machen, Position für Anspiel vorbereiten, Blick heben</li>
+          </ul>
+
+          <h3>Trainer-Input</h3>
+          <p>"Wir trainieren heute: <strong>Kopf hoch vor dem Pass + Anspielbar sein</strong>"</p>
+
+          <h2>4. Technisches Training: Dreieck-Zirkulärpass (12 Min)</h2>
+          <h3>Setup: 3er Gruppen</h3>
+          <ul>
+            <li><strong>5 Gruppen à 3 Spielerinnen</strong> (15 insgesamt)</li>
+            <li>Jede Gruppe bildet ein <strong>Dreieck</strong> (5-7m Seitenlänge)</li>
+            <li>1 Ball pro Gruppe</li>
+            <li>Fläche: Zirkel um Platz verteilt</li>
+          </ul>
+
+          <h3>Grundprinzip: Zirkuläres Positionswechsel</h3>
+          <p style="background: #f5f5f3; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;A<br/>
+            &nbsp;&nbsp;&nbsp;/ \<br/>
+            &nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;\<br/>
+            &nbsp;B ---&nbsp;C<br/>
+            <br/>
+            Ablauf:<br/>
+            A passt zu B → A läuft zu Position von C<br/>
+            B passt zu C → B läuft zu Position von A<br/>
+            C passt zu A → C läuft zu Position von B<br/>
+            → Kontinuierlicher Kreis
+          </p>
+
+          <h3>Varianten (4 Min pro Variante)</h3>
+          <p><strong>Variante 1: Basis-Zirkel</strong></p>
+          <ul>
+            <li>Ein Touch, Pass, sofort zur nächsten Position</li>
+            <li><strong>Coaching-Fokus:</strong> Anspielbar sein, offene Körperhaltung</li>
+          </ul>
+
+          <p><strong>Variante 2: Mit Kontrolle (Stop)</strong></p>
+          <ul>
+            <li>Ball stoppen (eine Kontrolle), dann passen</li>
+            <li><strong>Coaching-Fokus:</strong> Kopf hoch beim Stop (nicht auf Ball gucken), wo ist die nächste Spielerin?</li>
+          </ul>
+
+          <p><strong>Variante 3: Mit Tempo</strong></p>
+          <ul>
+            <li>Nach dem Pass schnell zur nächsten Position jogging</li>
+            <li><strong>Coaching-Fokus:</strong> Rhythmus, Eile, Fitness</li>
+          </ul>
+
+          <h3>Coaching-Points</h3>
+          <p>
+            ✅ Kopf beim Pass heben<br/>
+            ✅ Schnell in nächste Position<br/>
+            ✅ Anspielbar positionieren (sich öffnen)<br/>
+            ✅ Pass-Qualität (nicht zu hart)<br/>
+            ✅ Augen auf dem Ball UND auf der Mitspielerin
+          </p>
+
+          <h2>5. Anwendung: 3v3 auf Minitore (25 Min)</h2>
+          <h3>Setup</h3>
+          <ul>
+            <li><strong>2 Felder</strong> à ca. 25×20m</li>
+            <li><strong>4 Minitore pro Feld</strong> (2 an der Stirnseite, 2 an der Seitenlinie)</li>
+            <li><strong>Jedes Feld:</strong> 3v3 (Rollenwechsel alle 3-5 Min)</li>
+            <li>Restliche Spielerinnen passen zugeworfene Bälle rein</li>
+          </ul>
+
+          <h3>Regeln</h3>
+          <ul>
+            <li><strong>Keine speziellen Regeln</strong> (freies Spiel!)</li>
+            <li><strong>Fokus (durch Coaching):</strong> Kopf hoch + Anspielbar sein</li>
+            <li><strong>Keine Bestrafung</strong> für Fehler, aber Trainer beobachtet und coacht</li>
+          </ul>
+
+          <h3>Trainer-Hinweise während Spiel</h3>
+          <ul>
+            <li>"Schau mal wo deine Mitspielerin ist!"</li>
+            <li>"Gute Position zum Anspiel!"</li>
+            <li>"Schöner Pass mit Kopf oben!"</li>
+            <li>Bei Fehlern: "Versuch nächstes Mal hochzuschauen"</li>
+          </ul>
+
+          <h2>6. Ausklang: Dehnen/Cool-Down (6 Min)</h2>
+          <ul>
+            <li>Langsame Dehnungen</li>
+            <li>Kurze Abschlussbesprechung: "Was habt ihr gelernt?"</li>
+          </ul>
+
+          <h2>Materialien</h2>
+          <ul>
+            <li>⚽ 3 Bälle (für 2v2)</li>
+            <li>⚽ 5 Bälle (für Dreieck)</li>
+            <li>⚽ 4 Bälle (für 3v3, Wechsel)</li>
+            <li>🎯 Minitore (4 pro Feld)</li>
+            <li>🎯 Stangen/Markierungen (Feldabgrenzung)</li>
+          </ul>
+        `
+      }
+    ];
+
+    function renderPlans() {
+      const listEl = document.getElementById('plansList');
+      
+      if (plans.length === 0) {
+        listEl.innerHTML = '<div class="empty-state"><p>Noch keine Trainingspläne vorhanden</p></div>';
+        return;
+      }
+      
+      listEl.innerHTML = plans.map(plan => `
+        <div class="plan-card" data-id="${plan.id}">
+          <div class="plan-header">
+            <div class="plan-info">
+              <div class="plan-title">${plan.title}</div>
+              <div class="plan-meta">
+                <span>📅 ${new Date(plan.date).toLocaleDateString('de-DE', {year: 'numeric', month: 'long', day: 'numeric'})}</span>
+                <span>⏱ ${plan.duration}</span>
+                <span>👥 ${plan.participants}</span>
+              </div>
+            </div>
+            <div class="plan-toggle">▼</div>
+          </div>
+          <div class="plan-content">
+            <div class="plan-body">
+              <p><strong>Fokus:</strong> ${plan.focus}</p>
+              ${plan.html}
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Add click handlers
+      document.querySelectorAll('.plan-card').forEach(card => {
+        card.querySelector('.plan-header').addEventListener('click', () => {
+          card.classList.toggle('expanded');
+        });
+      });
+    }
+
+    // Initial render
+    renderPlans();
+  </script>
+</body>
+</html>
