@@ -503,15 +503,15 @@ const ZONE_TYPES = {
   },
   tor_funino: {
     name:"Funino Tor (2m)",
-    meta:"2×2 m · kleines Tor zum Trainieren",
-    w:2, h:2, cap:2,
+    meta:"2×1 m · kleines Tor zum Trainieren",
+    w:2, h:1, cap:2,
     color:"#d4a574",
     group:"Tore"
   },
   tor_jugend: {
     name:"Jugendtor (5m)",
-    meta:"5×2 m · Jugendtor zum Trainieren",
-    w:5, h:2, cap:2,
+    meta:"5×1.5 m · Jugendtor zum Trainieren",
+    w:5, h:1.5, cap:2,
     color:"#c9956f",
     group:"Tore"
   },
@@ -748,8 +748,8 @@ function renderZones(dragOnly){
   state.zones.forEach(z=>{
     let wM = z.w, hM = z.h;
     if(z.rotated){ [wM,hM] = [hM,wM]; }
-    const wPct = clamp((wM/f.w)*100, 4, 95);
-    const hPct = clamp((hM/f.h)*100, 4, 95);
+    const wPct = Math.max(1.5, (wM/f.w)*100);
+    const hPct = Math.max(1.5, (hM/f.h)*100);
 
     const div = document.createElement("div");
     div.className = "zone";
