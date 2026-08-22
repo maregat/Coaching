@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trainingspläne</title>
+  <title>Trainingseinheiten – E-Juniorinnen</title>
   <style>
     * {
       margin: 0;
@@ -101,6 +101,7 @@
       color: #6b756e;
       display: flex;
       gap: 16px;
+      flex-wrap: wrap;
     }
     
     .plan-toggle {
@@ -112,6 +113,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     
     .plan-card.expanded .plan-toggle {
@@ -126,7 +128,7 @@
     }
     
     .plan-card.expanded .plan-content {
-      max-height: 5000px;
+      max-height: 8000px;
     }
     
     .plan-body {
@@ -203,6 +205,24 @@
       background: #fafaf9;
     }
     
+    .feedback-box {
+      background: #fff3e0;
+      border-left: 4px solid #df713f;
+      padding: 12px;
+      margin: 16px 0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .success-box {
+      background: #e8f5e9;
+      border-left: 4px solid #2d6a4f;
+      padding: 12px;
+      margin: 16px 0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
     .tag {
       display: inline-block;
       background: #e8f5e9;
@@ -212,17 +232,6 @@
       font-size: 12px;
       font-weight: 500;
       margin-right: 8px;
-    }
-    
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: #6b756e;
-    }
-    
-    .empty-state p {
-      font-size: 16px;
-      margin-bottom: 8px;
     }
     
     @media (max-width: 600px) {
@@ -247,7 +256,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>📋 Trainingspläne</h1>
+      <h1>📋 Trainingseinheiten</h1>
       <a href="index.html" title="Zurück zur Startseite">←</a>
     </div>
     
@@ -257,13 +266,19 @@
   <script>
     const plans = [
       {
-        id: "kopf-hoch-freilaufen",
-        title: "Kopf hoch & Freilaufen",
-        date: "2026-08-20",
-        focus: "Ballkontrolle mit Blick nach oben, Anspielbarkeit, strukturiertes Passen",
+        id: "einheit-1",
+        title: "Einheit 1 – LZ1 Ballbesitz: Kopf hoch",
+        date: "2026-08-19",
+        focus: "Blickrichtung beim Ballbesitz, Anspielbarkeit erkennen, erste Touchs mit Orientierung",
         duration: "85 Minuten",
-        participants: "12 Spielerinnen (U12)",
+        participants: "12 Feldspielerin + Torhüterinnen",
         html: `
+          <h2>Status & Feedback</h2>
+          <div class="success-box">
+            <strong>✅ Durchgeführt am 19.08.2025</strong><br>
+            Feedback vom 22.08 integriert: Ältere Mädels beherrschen LZ1 bereits gut, Analytische Phase zu lang (gekürzt auf 8 Min max), Körpersprache-Variante sehr erfolgreich!
+          </div>
+
           <h2>Zeitverteilung</h2>
           <table class="time-table">
             <thead>
@@ -277,166 +292,374 @@
               <tr>
                 <td>Aufwärmen</td>
                 <td>10 min</td>
-                <td>Fangspiel zum Aktivieren</td>
+                <td>Frei Spielen – Ankommen & Spaß</td>
               </tr>
               <tr>
-                <td>2v2 Progressive</td>
+                <td>Spielproblem</td>
+                <td>10 min</td>
+                <td>2v2 auf Minitore – Problem erleben</td>
+              </tr>
+              <tr>
+                <td>Fragen & Demo</td>
+                <td>3 min</td>
+                <td>Reflexion + sichtbar machen</td>
+              </tr>
+              <tr>
+                <td>Kurzvorbereitung</td>
+                <td>8 min</td>
+                <td>Dreieck-Pass mit Variationen (analytisch gekürzt)</td>
+              </tr>
+              <tr>
+                <td>Anwendung + TW</td>
                 <td>25 min</td>
-                <td>Problemerkennung</td>
+                <td>3v3 plus Torhüterin Rotation</td>
               </tr>
               <tr>
-                <td>Analyse & Reflexion</td>
-                <td>5 min</td>
-                <td>Diskussion & Coaching</td>
-              </tr>
-              <tr>
-                <td>4er-Zirkulärpass mit Cue</td>
+                <td>Abschlussspiel</td>
                 <td>12 min</td>
-                <td>Technische Verbesserung</td>
+                <td>Freies Spiel oder Turnier-Simulation</td>
               </tr>
               <tr>
-                <td>3v3 auf Minitore</td>
-                <td>27 min</td>
-                <td>Anwendung & Spielspaß</td>
-              </tr>
-              <tr>
-                <td>Abschied & Verabschiedung</td>
-                <td>5 min</td>
-                <td>Kreis, Ausklang</td>
+                <td>Reflexion</td>
+                <td>3 min</td>
+                <td>Kreis, Abschlusswort</td>
               </tr>
             </tbody>
           </table>
 
-          <h2>1. Aufwärmen (10 Min)</h2>
-          <p><strong>Ziel:</strong> Spielerinnen aktivieren und in Bewegung bringen – mit Spass!</p>
-          <h3>Fangspiel</h3>
-          <p>Ein einfaches Fangspiel zum Aktivieren und Bewegen. (Variante wird noch überlegt)</p>
-          <p style="font-size: 13px; color: #6b756e; font-style: italic;">💡 Fokus: Spass, Bewegung, Aktivierung</p>
-
-          <h2>2. Problemerkennung: 2v2 Progressive (25 Min)</h2>
-          <h3>Setup</h3>
+          <h2>Phase 1: Aufwärmen (10 Min)</h2>
+          <h3>Übung: Freies Spiel – Ankommen</h3>
           <ul>
-            <li><strong>3 Felder</strong> à ca. 20×15m (Kleinfelder)</li>
-            <li><strong>6 Teams à 2 Spielerinnen</strong> → je 2v2 spielen (keine Pausen!)</li>
-            <li>Pro Feld: 2 Ministore (ca. 1-1,5m breit) an den Stirnseiten</li>
-            <li>Pro Feld: 2 Teams spielen, wechseln alle ~5-7 Min</li>
+            <li><strong>Feld:</strong> Ein Funino, alle 12 durchmischt</li>
+            <li><strong>Regel:</strong> Frei spielen auf die 4 Minitore</li>
+            <li><strong>Coach:</strong> Schauen, nicht korrigieren – nur genießen!</li>
           </ul>
 
-          <h3>Phase 1: Freies Spiel (7 Min)</h3>
+          <h2>Phase 2: Spielproblem erleben (10 Min)</h2>
+          <h3>Übung: 2v2 auf vier Minitore</h3>
           <ul>
-            <li><strong>Regeln:</strong> Nur Grundregeln (keine Handspiel, normales Foul)</li>
-            <li><strong>Fokus:</strong> Beobachten, wie spielen die Mädels? Gucken sie hochschauen? Passen sie?</li>
-            <li><strong>Problem sichtbar machen:</strong> Oft mangelnde Blickrichtung, wenig Positionswechsel</li>
+            <li><strong>2 Gruppen parallel</strong> auf 2 Funino-Feldern</li>
+            <li><strong>Tor-Regel:</strong> Zählt nur, wenn Ballführende <strong>VOR dem Pass hingeschaut hat</strong></li>
+            <li><strong>Dauer:</strong> 4 Min spielen, dann Rotation</li>
+            <li><strong>Trainer-Beobachtung:</strong> Wer schaut hoch? Wer bietet sich an?</li>
           </ul>
 
-          <h3>Phase 2: Mit Zusatzregel (13 Min)</h3>
-          <p><strong>Neue Regel einführen:</strong></p>
-          <blockquote style="background: #f5f5f3; padding: 12px; border-left: 3px solid #2d6a4f; margin: 12px 0;">
-            "Ein Tor zählt nur, wenn vorher jede Spielerin den Ball hatte UND es gibt mindestens einen Pass zwischen den Spielerinnen. Kein direktes Torschuss zählt!"
-          </blockquote>
+          <h2>Phase 3: Wahrnehmung & Fragen (3 Min)</h2>
+          <p><strong>Stopp und alle versammeln:</strong></p>
           <ul>
-            <li><strong>Effekt:</strong> Zwingt zu Passen, Positionswechsel, Hochschauen</li>
-            <li><strong>Problem wird evident:</strong> Mädels merken, dass ständiges "Hochgucken" und "Anspielbar sein" nötig ist</li>
-            <li><strong>Coachen während des Spiels:</strong> "Wo ist deine Mitspielerin? Kannst du sie sehen?"</li>
+            <li>„Was war schwer: angreifen oder wem passen?"</li>
+            <li>„Wer hat die Mitspielerin neben sich gesehen?"</li>
+            <li>„Wann war es leichter – schnell spielen oder hinschauen?"</li>
+          </ul>
+          <p><strong>Trainer-Input:</strong> „Wir trainieren heute: <strong>Kopf hoch vor dem Pass + sich zeigen</strong>"</p>
+
+          <h2>Phase 4: Kurzvorbereitung – Dreieck (8 Min)</h2>
+          <h3>Übung: Dreieck-Pass mit Variationen</h3>
+          <ul>
+            <li><strong>4 Gruppen à 3 Spieler</strong></li>
+            <li><strong>Grundform (2 Min):</strong> A→B→C→A, nach jedem Pass bewegen</li>
+            <li><strong>Variation 1 (2 Min) – Schneller:</strong> Höheres Tempo</li>
+            <li><strong>Variation 2 (2 Min) – Mit Körpersprache:</strong> Keine Worte! Nur Nicken/Handheben → <span class="tag">Hit!</span></li>
+            <li><strong>Variation 3 (2 Min) – Zwei Bälle:</strong> Simultane Pässe, echte Orientierung nötig</li>
+          </ul>
+          <div class="success-box">
+            <strong>✓ Erfolgreich:</strong> Körpersprache-Variante (ohne Worte) hat am meisten gewirkt – Spieler mussten wirklich schauen!
+          </div>
+
+          <h2>Phase 5: Anwendung im Spiel (25 Min)</h2>
+          <h3>Übung: 3v3 plus Torhüterin mit Rotation</h3>
+          <ul>
+            <li><strong>2 Jugendtore</strong> (ca. 25m × 20m)</li>
+            <li><strong>2 Gruppen à 6:</strong> 3v3 spielend, 1 TW wechselnd alle 3-4 Min</li>
+            <li><strong>Regel:</strong> Normales Spiel, Trainer coacht live: „Schau hin!", „Gute Position zum Anspiel!"</li>
+            <li><strong>TW Learning by Doing:</strong> Torhüterinnen spielen mit, lernen durch Praxis (kein formales Training)</li>
           </ul>
 
-          <h2>3. Analyse & Reflexion (5 Min)</h2>
-          <h3>Gesprächspunkte mit den Spielerinnen</h3>
+          <h2>Phase 6: Abschlussspiel (12 Min)</h2>
           <ul>
-            <li><strong>"Was war schwer?"</strong> → Antworten: "Mitspielerin war nicht zu sehen", "Wusste nicht, wo hin passen"</li>
-            <li><strong>"Was war leicht?"</strong> → Antworten: "Dribbeln", "Tor schießen" (wenn direkt möglich)</li>
-            <li><strong>"Wie könnt ihr das Problem lösen?"</strong> → Ziel: Spielerinnen sollen auf "Kopf hoch" und "Anspielbar sein" selber kommen</li>
-            <li><strong>"Was müsst ihr trainieren?"</strong> → Rückpass machen, Position für Anspiel vorbereiten, Blick heben</li>
+            <li><strong>6v6</strong> auf Jugendtoren oder freies Spiel</li>
+            <li><strong>Fokus:</strong> Anwendung ohne Coaching (Spielspaß!)</li>
           </ul>
 
-          <h3>Trainer-Input</h3>
-          <p>"Wir trainieren heute: <strong>Kopf hoch vor dem Pass + Anspielbar sein</strong>"</p>
-
-          <h2>4. Technisches Training: 4er-Zirkulärpass mit Cue-System (12 Min)</h2>
-          <h3>Setup: 4er Gruppen mit je 3 Spielerinnen</h3>
-          <ul>
-            <li><strong>4 Gruppen à 3 Spielerinnen</strong> (12 insgesamt, keine Pausen!)</li>
-            <li>Jede Gruppe bildet ein <strong>Viereck mit 4 Stangen</strong> (6-7m Seitenlänge)</li>
-            <li>1 Ball pro Gruppe</li>
-            <li>Fläche: Zirkel um Platz verteilt</li>
-          </ul>
-
-          <h3>Grundprinzip: Zirkuläres Positionswechsel mit Cue-System</h3>
-          <p style="background: #f5f5f3; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;D &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C<br/>
-            <br/>
-            Ablauf mit CUE:<br/>
-            A passt zu B → A läuft zur Position von D (freier Platz)<br/>
-            B empfängt und gibt CUE (Handzeichen, Kopfnicken) zu C<br/>
-            B passt zu C, läuft zur Position von A<br/>
-            C empfängt und gibt CUE zu D<br/>
-            C passt zu D, läuft zur Position von B<br/>
-            D empfängt und gibt CUE zu A<br/>
-            D passt zu A, läuft zur Position von C<br/>
-            → Kontinuierlicher Kreis, A gibt dann CUE zu nächster Person<br/>
-            <br/>
-            <strong>WICHTIG: Pass erfolgt NUR nach Cue-Signal vom Empfänger!</strong>
-          </p>
-
-          <h3>Was das trainiert</h3>
-          <ul>
-            <li><strong>Kopf hoch:</strong> Passer muss Empfänger im Auge behalten um auf Cue zu warten</li>
-            <li><strong>Freilaufen:</strong> Spielerin bewegt sich aktiv zur freien Position (zeigt sich an)</li>
-            <li><strong>Anspielbarkeit:</strong> Durch Positionswechsel und Cue-Signal kommuniziert die Spielerin ihre Bereitschaft</li>
-            <li><strong>Kommunikation:</strong> Echte Spielsituation mit echtem Austausch</li>
-          </ul>
-
-          <h3>Coaching-Points</h3>
-          <p>
-            ✅ Passer schaut hoch und wartet auf Cue<br/>
-            ✅ Empfänger bewegt sich aktiv auf freien Platz<br/>
-            ✅ Cue-Signal deutlich und rechtzeitig geben<br/>
-            ✅ Schnell in nächste Position nach Pass<br/>
-            ✅ Offene Körperhaltung (für nächsten Pass vorbereitet)<br/>
-            ✅ Rhythmus beibehalten
-          </p>
-
-          <h2>5. Anwendung: 3v3 auf Minitore (27 Min)</h2>
-          <h3>Setup</h3>
-          <ul>
-            <li><strong>2 Felder</strong> à ca. 25×20m</li>
-            <li><strong>4 Minitore pro Feld</strong> (2 an der Stirnseite, 2 an der Seitenlinie)</li>
-            <li><strong>Jedes Feld:</strong> 3v3 (Rollenwechsel alle 3-5 Min)</li>
-            <li>Restliche Spielerinnen passen zugeworfene Bälle rein</li>
-          </ul>
-
-          <h3>Regeln</h3>
-          <ul>
-            <li><strong>Keine speziellen Regeln</strong> (freies Spiel!)</li>
-            <li><strong>Fokus (durch Coaching):</strong> Kopf hoch + Anspielbar sein</li>
-            <li><strong>Keine Bestrafung</strong> für Fehler, aber Trainer beobachtet und coacht</li>
-          </ul>
-
-          <h3>Trainer-Hinweise während Spiel</h3>
-          <ul>
-            <li>"Schau mal wo deine Mitspielerin ist!"</li>
-            <li>"Gute Position zum Anspiel!"</li>
-            <li>"Schöner Pass mit Kopf oben!"</li>
-            <li>Bei Fehlern: "Versuch nächstes Mal hochzuschauen"</li>
-          </ul>
-
-          <h2>6. Abschied & Verabschiedung (5 Min)</h2>
+          <h2>Phase 7: Reflexion (3 Min)</h2>
           <ul>
             <li>Kreis bilden</li>
-            <li>Kurze Verabschiedung & Abschlusswort</li>
+            <li>„Wer hat heute hochgeschaut?" / „Was war cool?"</li>
+            <li>Kurzes Abschlusswort & Verabschiedung</li>
+          </ul>
+        `
+      },
+      {
+        id: "einheit-2",
+        title: "Einheit 2 – LZ1 vertieft + LZ2 Freilaufen einführen",
+        date: "2026-08-26",
+        focus: "Kopf hoch verfestigen, Freilaufen erkennen, Angebote machen, TW lernen durch Spiel",
+        duration: "85 Minuten",
+        participants: "12 Feldspielerin + 4-5 Torhüterinnen",
+        html: `
+          <h2>Kontext & Besonderheiten</h2>
+          <div class="feedback-box">
+            <strong>📌 Adaptation nach Einheit 1:</strong><br>
+            • NO A/B-Trennung während Spielproblem (alle zusammen)<br>
+            • A/B Separation nur im Abschlussspiel (je nach Tagesform)<br>
+            • Analytische Phase auf 8 Min gekürzt<br>
+            • Echte TW integriert (Learning by Doing)
+          </div>
+
+          <h2>Zeitverteilung</h2>
+          <table class="time-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Zeit</th>
+                <th>Fokus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aufwärmen</td>
+                <td>10 min</td>
+                <td>Freies Spiel – Ankommen</td>
+              </tr>
+              <tr>
+                <td>Spielproblem</td>
+                <td>10-12 min</td>
+                <td>2v2/3v3 – Freilaufen-Problem erleben</td>
+              </tr>
+              <tr>
+                <td>Fragen + Demo</td>
+                <td>3 min</td>
+                <td>Reflexion: „Wer hatte Platz?"</td>
+              </tr>
+              <tr>
+                <td>Kurzvorbereitung</td>
+                <td>8 min</td>
+                <td>Dreieck + Raute-Intro (ohne Druck)</td>
+              </tr>
+              <tr>
+                <td>Anwendung + TW</td>
+                <td>25 min</td>
+                <td>4v4 plus TW mit Rotation</td>
+              </tr>
+              <tr>
+                <td>Abschlussspiel A/B</td>
+                <td>12 min</td>
+                <td>Flexe Gruppen je Tagesform</td>
+              </tr>
+              <tr>
+                <td>Reflexion</td>
+                <td>3 min</td>
+                <td>Kreis, Ausblick</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Phase 1: Aufwärmen (10 Min)</h2>
+          <p>Wie Einheit 1 – freies Spiel zum Ankommen</p>
+
+          <h2>Phase 2: Spielproblem – Freilaufen (10-12 Min)</h2>
+          <h3>Übung: 2v2 oder 3v3 auf Minitore</h3>
+          <ul>
+            <li><strong>Problem:</strong> „Wo bin ich als Empfänger?" (LZ2)</li>
+            <li><strong>Regel:</strong> Tor zählt nur mit Pass + Angebot (wie vorher)</li>
+            <li><strong>Trainer-Beobachtung:</strong> Wer bietet sich an? Wer läuft zur richtigen Zeit?</li>
+            <li><strong>Alle zusammen spielen – KEINE A/B-SEPARATION JETZT!</strong></li>
           </ul>
 
-          <h2>Materialien</h2>
+          <h2>Phase 3: Wahrnehmung & Demo (3 Min)</h2>
           <ul>
-            <li>⚽ 3 Bälle (für 2v2)</li>
-            <li>⚽ 5 Bälle (für Dreieck)</li>
-            <li>⚽ 4 Bälle (für 3v3, Wechsel)</li>
-            <li>🎯 Minitore (4 pro Feld)</li>
-            <li>🎯 Stangen/Markierungen (Feldabgrenzung)</li>
+            <li>„Wer hatte freien Platz?" (nicht: wer war verloren)</li>
+            <li>„Wie zeigest du dich an?" (Bewegung, Ruf, Körpersprache)</li>
+            <li><strong>Demo 3er-Gruppe:</strong> Zeigt Freilaufen aktiv (gute Positionen, schnelle Offerte)</li>
           </ul>
+
+          <h2>Phase 4: Analytische Phase – Dreieck + Raute (8 Min)</h2>
+          <h3>Basis: Dreieck verfestigen (4 Min)</h3>
+          <ul>
+            <li>Wie Einheit 1, aber schneller (bekannt jetzt)</li>
+            <li>Körpersprache-Variante beibehalten</li>
+          </ul>
+
+          <h3>Neuer Input: Raute-Intro (4 Min)</h3>
+          <ul>
+            <li><strong>Viereck-Positions-Spiel:</strong> 4 Spieler bilden Raute (Diamant)</li>
+            <li><strong>Einfache Version:</strong> A (oben) → B (rechts) → C (unten) → D (links) → A</li>
+            <li><strong>Mit Bewegung:</strong> Nach jedem Pass in die freie Position (nicht geklärt = Raute-Logik)</li>
+            <li><strong>Fokus:</strong> „Wer hat Platz?" statt Raute-System rigid</li>
+            <li><strong>Kein Test:</strong> Vorerst nur Feeling, kein Druck!</li>
+          </ul>
+
+          <h2>Phase 5: Anwendung – 4v4 + TW (25 Min)</h2>
+          <h3>Übung: Kleinfeldspiel mit echten Torhüterinnen</h3>
+          <ul>
+            <li><strong>2 Felder à 4v4</strong> (mit jeweils 1 TW)</li>
+            <li><strong>TW-Rotation:</strong> Alle TW spielen Min 10-15 Min</li>
+            <li><strong>TW-Fokus:</strong> Spielen, anfassen, Grundlagen lernen durch Praxis</li>
+            <li><strong>Feldspiel-Fokus:</strong> LZ1 (Kopf hoch) + LZ2 (Freilaufen) anwenden</li>
+            <li><strong>Trainer:</strong> Coacht beide Felder, gibt Live-Feedback</li>
+          </ul>
+
+          <h2>Phase 6: Abschlussspiel mit flexibler Gruppen (12 Min)</h2>
+          <p><strong>NO festgelegte A/B-Gruppen!</strong> Gruppierung nach Tagesform/Anwesenheit:</p>
+          <ul>
+            <li><strong>Gruppe A (stärker heute):</strong> 6v6 großes Feld, komplexere Aufgaben</li>
+            <li><strong>Gruppe B (variabler):</strong> 4v4 Kleinfeld, noch mehr Spielkontakt</li>
+            <li><strong>Oder:</strong> Alle 6v6 mit zufälligen Teams (Durchmischen!)</li>
+            <li><strong>Fokus:</strong> Spaß, aber auch Anwendung der Lernziele</li>
+          </ul>
+
+          <h2>Phase 7: Reflexion (3 Min)</h2>
+          <ul>
+            <li>„Wer hat gut freigelaufen?" / „Wer hat gut hingeschaut?"</li>
+            <li>Ausblick: „Nächste Woche: Raute-Spiel + Turnier-Vorbereitung!"</li>
+          </ul>
+        `
+      },
+      {
+        id: "einheit-3",
+        title: "Einheit 3 – LZ2 + 4+1 Raute Simulation",
+        date: "2026-08-29",
+        focus: "Freilaufen vertiefen, 4+1 Raute intuitive Anwendung, Turnier-Vorbereitung",
+        duration: "85 Minuten",
+        participants: "12 Feldspielerin + 4-5 Torhüterinnen",
+        html: `
+          <h2>Kontext – Vor dem Turnier</h2>
+          <div class="feedback-box">
+            <strong>🎯 Letztes Training vor Turnier-Wochenende</strong><br>
+            • Raute "Auf Sicht" – keine formale Erklärung, learning by doing<br>
+            • 4+1 Formation spielen wie in Turnier<br>
+            • TW-Positionierungen intuitive Vorbereitung<br>
+            • Freude bewahren, keine Überladung
+          </div>
+
+          <h2>Zeitverteilung</h2>
+          <table class="time-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Zeit</th>
+                <th>Fokus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aufwärmen</td>
+                <td>10 min</td>
+                <td>Freies Spiel</td>
+              </tr>
+              <tr>
+                <td>Spielproblem</td>
+                <td>10 min</td>
+                <td>3v3 Raute-Feeling (noch spielerisch)</td>
+              </tr>
+              <tr>
+                <td>Fragen + Demo</td>
+                <td>3 min</td>
+                <td>„Wer stand gut?" ohne Druck</td>
+              </tr>
+              <tr>
+                <td>Kurzvorbereitung</td>
+                <td>8 min</td>
+                <td>4+1 Raute Positionsspiel (offen)</td>
+              </tr>
+              <tr>
+                <td>Anwendung + TW</td>
+                <td>25 min</td>
+                <td>5v5 Raute-Spiel, TW-Rotation (echte Formation)</td>
+              </tr>
+              <tr>
+                <td>Abschlussspiel</td>
+                <td>12 min</td>
+                <td>Größeres Spielformat oder Turnier-Simulation</td>
+              </tr>
+              <tr>
+                <td>Reflexion</td>
+                <td>3 min</td>
+                <td>Turnier-Ausblick, Motivation</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Phase 1: Aufwärmen (10 Min)</h2>
+          <p>Freies Spiel zum Ankommen – wie immer</p>
+
+          <h2>Phase 2: Spielproblem – Raute-Feeling (10 Min)</h2>
+          <h3>Übung: 3v3 auf Minitore mit Raute-Struktur</h3>
+          <ul>
+            <li><strong>Setup:</strong> 3v3 auf 2 Funino-Feldern</li>
+            <li><strong>Regel-Hinweis (subtil):</strong> „Versucht, im Dreieck / Viereck zu spielen – einer vorne, einer hinten, zwei Seite" (nicht erzwungen!)</li>
+            <li><strong>Beobachtung:</strong> Entstehen natürliche Positionen? Wer bietet sich von Seite an?</li>
+            <li><strong>Fokus:</strong> Spielerisches Feeling für räumliche Verteilung, NICHT dogmatisch</li>
+          </ul>
+
+          <h2>Phase 3: Wahrnehmung + Demo (3 Min)</h2>
+          <ul>
+            <li>„Wer stand günstig?" (nicht „falsch")</li>
+            <li><strong>Demo 4er-Gruppe:</strong> Zeigt lockere Raute in Bewegung (Positionen wechseln flüssig)</li>
+            <li>Trainer: „So ähnlich spielen wir morgen beim Turnier – vier Fußball, einer Tor!"</li>
+          </ul>
+
+          <h2>Phase 4: Analytische Phase – 4+1 Raute (8 Min)</h2>
+          <h3>Übung: Positionen-Positionsspiel (offene Version)</h3>
+          <ul>
+            <li><strong>2 Gruppen à 4 Feldspielerin + 1 TW</strong></li>
+            <li><strong>Bildung:</strong> Lockere Raute (1 oben/Spitze, 2 Seite, 1 tief/Aufbau) + TW</li>
+            <li><strong>Aufgabe:</strong> Pass-Kreis (wie Dreieck), aber in Raute-Shape</li>
+            <li><strong>Rotation:</strong> Jede Spielerin probiert jede Position (10-15 Sekunden)</li>
+            <li><strong>TW:</strong> Steht im Tor, gibt Rückendeckung (nicht spielend!)</li>
+            <li><strong>Fokus:</strong> Raum-Feeling, Entfernungen, natürliche Position finden</li>
+            <li><strong>WICHTIG:</strong> Kein Test, kein Drill – nur Trockentraining der Form</li>
+          </ul>
+
+          <h2>Phase 5: Anwendung – 5v5 Raute + TW Rotation (25 Min)</h2>
+          <h3>Übung: Echtes Raute-Spiel mit Torhüterinnen</h3>
+          <ul>
+            <li><strong>2 Gruppen à 5+1 (4 Feld + 1 Auf/Raute-Spitze + 1 TW)</strong></li>
+            <li><strong>Feld-Setup:</strong> Großeres Kleinfeld (~30×25m) mit echten Jugendtoren</li>
+            <li><strong>Regelwerk:</strong> Normales Spiel, Trainer coacht Raute-Positionen LIVE:
+              <ul style="margin-top: 8px;">
+                <li>„Pass nach vorne!" (Spitze)</li>
+                <li>„Seitenspieler anbieten!" (Breite)</li>
+                <li>„Hinten stabilisieren!" (Aufbau/Ruhe)</li>
+              </ul>
+            </li>
+            <li><strong>TW-Rotation:</strong> Alle TW spielen integral (echte Erfahrung)</li>
+            <li><strong>Fokus:</strong> Raute nicht rigid, aber sensibel für die Struktur</li>
+          </ul>
+
+          <h2>Phase 6: Abschlussspiel – Turnier-Simulation (12 Min)</h2>
+          <h3>Option A: Mini-Turnier (3 Spiele à 4 Min)</h3>
+          <ul>
+            <li>6v6 oder 5v5, 4 Min pro Spiel</li>
+            <li>Punkte/Tore-Tally (aber nur zum Spaß!)</li>
+            <li>Wechsel Teams nach jedem Spiel</li>
+            <li>Fokus: Wie fühlt sich Turnier an? TW-Rollen klar?</li>
+          </ul>
+
+          <h3>Option B: Großspiel + Rotation</h3>
+          <ul>
+            <li>8v4 oder 6v6, aber regelmäßige Wechsel</li>
+            <li>Mehrere TW rotieren durchgehend</li>
+            <li>Raute-Positionen spielen (ohne zu sagen)</li>
+          </ul>
+
+          <h2>Phase 7: Reflexion – Turnier-Ausblick (3 Min)</h2>
+          <ul>
+            <li>Kreis bilden</li>
+            <li>„Wie war es in der Raute?" / „Wer fühlt sich bereit?"</li>
+            <li><strong>Trainer-Abschlusswort:</strong> „Morgen beim Turnier: Spaß, Teamgeist, wir spielen zusammen! Guter Plan – wir machen das!"</li>
+            <li>Motivational Energy, keine Angst!</li>
+          </ul>
+
+          <h2>🎯 Turnier-Vorbereitung (Meta-Hinweise)</h2>
+          <div class="success-box">
+            <strong>✓ Nach Einheit 3 sollten Spieler/TW wissen:</strong><br>
+            • Raute ist flexibel (nicht rigid)<br>
+            • Jede Position hat eine Aufgabe<br>
+            • TW sind Teil des Spiels (nicht isoliert)<br>
+            • Teamgeist wichtiger als perfekte Formation<br>
+            • Wenn es chaotisch wird: zurück zu Grundlagen (Kopf hoch, Anspiel-Angebot)
+          </div>
         `
       }
     ];
@@ -445,7 +668,7 @@
       const listEl = document.getElementById('plansList');
       
       if (plans.length === 0) {
-        listEl.innerHTML = '<div class="empty-state"><p>Noch keine Trainingspläne vorhanden</p></div>';
+        listEl.innerHTML = '<div class="empty-state"><p>Noch keine Trainingseinheiten vorhanden</p></div>';
         return;
       }
       
